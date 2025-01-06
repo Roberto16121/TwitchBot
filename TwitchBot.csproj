@@ -9,11 +9,46 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Ban.png" />
+    <None Remove="Images\Clock.png" />
+    <None Remove="Images\Delete.png" />
+    <None Remove="Images\Moderator.png" />
+    <None Remove="Images\White.png" />
+    <None Remove="UI_Parts\Moderator.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TwitchLib.Api" Version="3.9.0" />
     <PackageReference Include="TwitchLib.Client" Version="3.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Page Include="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\Ban.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Clock.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Moderator.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\White.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Delete.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="UI_Parts\Moderator.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Images\Timeout.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -11,8 +11,8 @@ namespace TwitchBot
     /// </summary>
     public partial class MainWindow : Window
     {
-        Client client;
-        ChatHandler chatHandler;
+        readonly Client client;
+        readonly ChatHandler chatHandler;
 
 
         public MainWindow()

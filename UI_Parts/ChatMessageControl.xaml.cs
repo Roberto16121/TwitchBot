@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using TwitchLib.Client.Events;
+
 
 namespace TwitchBot.UI_Parts
 {
     public partial class ChatMessageControl : UserControl
     {
+
+        public ChatMessage thisMessage;
         public ChatMessageControl()
         {
             InitializeComponent();
@@ -40,8 +31,40 @@ namespace TwitchBot.UI_Parts
                 control.UsernameText.Text = message.username;
                 control.MessageText.Text = message.messageText;
                 control.TimestampText.Text = message.sentTime.ToString("hh:mm:ss tt");
-                control.UsernameText.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(message.userColor));
+                control.UsernameText.Foreground = new SolidColorBrush(
+                    (Color)ColorConverter.ConvertFromString(message.userColor == "" ? "#FF0000" : message.userColor));
+                if(message.isModerator)
+                {
+                    control.BanButton.Visibility = Visibility.Collapsed;
+                    control.TimeoutButton.Visibility = Visibility.Collapsed;
+                    control.DeleteButton.Visibility = Visibility.Collapsed;
+                }
+                else control.ModImage.Visibility = Visibility.Collapsed;
+                control.thisMessage = message;
+                 
             }
         }
+
+        #region Buttons
+        private void BanButton_Click(object sender, RoutedEventArgs e)
+        {
+            Client.Instance.BanUser(thisMessage.channel, thisMessage.username);
+        }
+
+        private void Timeout_Click(object sender, RoutedEventArgs e)
+        {
+            Client.Instance.TimeoutUser(thisMessage.channel, thisMessage.username);
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            if (thisMessage.messageId == "")
+                return;
+            Client.Instance.DeleteMessage(thisMessage.messageId);
+        }
+
+
+        #endregion Buttons
+
     }
 }

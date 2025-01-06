@@ -12,7 +12,7 @@ namespace TwitchBot
 {
     internal class ChatHandler
     {
-        public ObservableCollection<ChatMessage> Messages { get; private set; } = new ObservableCollection<ChatMessage>();
+        public ObservableQueue<ChatMessage> Messages { get; private set; } = [];
 
         public ChatHandler()
         {
@@ -21,25 +21,31 @@ namespace TwitchBot
 
         public void AddMessage(OnMessageReceivedArgs e)
         {
-            Messages.Add(new ChatMessage
+            Messages.Enqueue(new ChatMessage
             {
                 username = e.ChatMessage.Username,
                 messageText = e.ChatMessage.Message,
                 sentTime = DateTime.Now,
-                isModerator = e.ChatMessage.IsModerator,
-                userColor = e.ChatMessage.ColorHex
+                isModerator = e.ChatMessage.IsModerator || e.ChatMessage.IsBroadcaster,
+                userColor = e.ChatMessage.ColorHex,
+                channel = e.ChatMessage.Channel,
+                messageId = e.ChatMessage.Id
             });
+            if(Messages.Count > 5)
+            {
+                Messages.Dequeue();
+            }
         }
 
         public void AddMessage(string username, string messageText)
         {
-            Messages.Add(new ChatMessage
+            Messages.Enqueue(new ChatMessage
             {
                 username = username,
                 messageText = messageText,
                 sentTime = DateTime.Now,
                 isModerator = true,
-                userColor = "#00FFFF"
+                userColor = "#FF0000"
             });
         }
         
