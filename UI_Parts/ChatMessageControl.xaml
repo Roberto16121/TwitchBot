@@ -7,14 +7,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="600">
     <Grid>
-        <Border BorderThickness="1" BorderBrush="Gray" Padding="5" Margin="24,2,2,2" CornerRadius="5">
+        <Border BorderThickness="1" 
+                BorderBrush="Gray"
+                Padding="5" 
+                Margin="24,2,2,2"
+                CornerRadius="5">
             <StackPanel>
                 <TextBlock x:Name="UsernameText" 
                            FontWeight="Bold" 
                            Foreground="Blue" />
 
                 <TextBlock x:Name="MessageText" 
-                           TextWrapping="WrapWithOverflow" />
+                           TextWrapping="Wrap" />
 
                 <TextBlock x:Name="TimestampText" 
                            FontSize="10" 

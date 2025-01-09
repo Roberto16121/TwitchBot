@@ -12,9 +12,34 @@ public class ChatMessage
     public string messageText = "";
     public DateTime sentTime;
     public bool isModerator;
+    public bool isSubscriber;
+    public bool isVIP;
     public string userColor = "";
     public string channel = "";
     public string messageId = "";
+}
+
+public class ActiveViewer
+{
+    public string username = "";
+    public ViewerType viewerType;
+    public string userColor = "";
+
+    public ActiveViewer(string name, ViewerType type, string color)
+    {
+        username = name;
+        viewerType = type;
+        userColor = color;
+    }
+}
+
+public enum ViewerType
+{
+    Broadcaster,
+    Moderator,
+    VIP,
+    Subscriber,
+    Normal
 }
 
 public static class Helper

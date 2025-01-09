@@ -13,6 +13,8 @@
     <None Remove="Images\Clock.png" />
     <None Remove="Images\Delete.png" />
     <None Remove="Images\Moderator.png" />
+    <None Remove="Images\SUB.png" />
+    <None Remove="Images\VIP.png" />
     <None Remove="Images\White.png" />
     <None Remove="UI_Parts\Moderator.png" />
   </ItemGroup>
@@ -34,6 +36,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Moderator.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\SUB.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\VIP.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\White.png">

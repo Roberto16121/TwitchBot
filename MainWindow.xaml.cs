@@ -3,6 +3,7 @@ using TwitchLib.Client.Events;
 using System.Diagnostics;
 using System.Windows.Threading;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace TwitchBot
 {
@@ -12,7 +13,6 @@ namespace TwitchBot
     public partial class MainWindow : Window
     {
         readonly Client client;
-        readonly ChatHandler chatHandler;
 
 
         public MainWindow()
@@ -21,15 +21,14 @@ namespace TwitchBot
             client = new();
 
             client.OnMessageReceived += UpdateMessages;
-            chatHandler = new ChatHandler();
-            DataContext = chatHandler;
+            DataContext = client.chatHandler;
         }
 
         private void UpdateMessages(OnMessageReceivedArgs e)
         {
             Dispatcher.Invoke(() =>
             {
-                chatHandler.AddMessage(e);
+                client.AddMessageToHandler(e);
 
                 var scrollViewer = Helper.GetScrollViewer(ChatBox);
                 if (scrollViewer == null)
@@ -51,12 +50,26 @@ namespace TwitchBot
                 if(MessageBox.Text != String.Empty)
                 {
                     client.SendMessage(MessageBox.Text);
-                    chatHandler.AddMessage(client.username, MessageBox.Text);
+                    client.AddMessageToHandler(client.username, MessageBox.Text);
                     MessageBox.Text = String.Empty;
                 }
             }
         }
 
+        private void ModulesButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void StatisticsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
     }
 }

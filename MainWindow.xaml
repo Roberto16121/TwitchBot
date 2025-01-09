@@ -4,14 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TwitchBot.UI_Parts" 
-        xmlns:UserControl="clr-namespace:TwitchBot.UI_Parts"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
+        MinHeight="400"
+        MinWidth="600"
         Title="MainWindow" Height="650" Width="1000">
-    <Grid>
+    <Grid Background="#A888B5">
         <ListBox 
             ItemsSource="{Binding Messages}"
             HorizontalContentAlignment="Stretch"
-            BorderThickness="1" Margin="243,24,45,110"
+            BorderBrush="DarkGray"
+            BorderThickness="2"
+            Background="#B6CBBD"
+            Margin="243,36,45,110"
             x:Name="ChatBox"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             ScrollViewer.VerticalScrollBarVisibility="Auto">
@@ -22,10 +27,87 @@
             </ListBox.ItemTemplate>
 
         </ListBox>
+        <Label Margin="243,0,45,20"
+               Height="26"
+               VerticalAlignment="Bottom"
+               Content="Send a Message"/>
         <TextBox x:Name="MessageBox"
                  Margin="243,0,45,46" 
                  TextWrapping="Wrap"
-                 Text=""
-                 KeyDown="MessageBox_KeyDown" Height="42" VerticalAlignment="Bottom"/>
+                 Background="#B6CBBD"
+                 KeyDown="MessageBox_KeyDown"
+                 Height="42"
+                 VerticalAlignment="Bottom">
+
+        </TextBox>
+
+        <UniformGrid HorizontalAlignment="Left"
+                Width="243" 
+                Height="213"
+                VerticalAlignment="Top"
+                Background="Transparent"
+                Columns="1">
+            <Button x:Name="ModulesButton"
+                    BorderBrush="DarkGray"
+                    Background="#FFD2A0"
+                    VerticalAlignment="Stretch" 
+                    HorizontalAlignment="Stretch" 
+                    Click="ModulesButton_Click"
+                    Padding="2">
+                <Label TextBlock.FontSize="24"
+                       TextBlock.FontWeight="Bold"
+                       Content="Modules"/>
+            </Button>
+
+            <Button x:Name="StatisticsButton"
+                    BorderBrush="DarkGray"
+                    Background="#FFD2A0"
+                    VerticalAlignment="Stretch" 
+                    HorizontalAlignment="Stretch" 
+                    Click="StatisticsButton_Click"
+                    Padding="2">
+                <Label TextBlock.FontSize="24"
+                       TextBlock.FontWeight="Bold"
+                       Content="Statistics"/>
+            </Button>
+
+            <Button x:Name="SettingsButton"
+                    BorderBrush="DarkGray"
+                    Background="#FFD2A0"
+                    VerticalAlignment="Stretch" 
+                    HorizontalAlignment="Stretch" 
+                    Click="SettingsButton_Click"
+                    Padding="2">
+                <Label TextBlock.FontSize="24"
+                        TextBlock.FontWeight="Bold"
+                        Content = "Settings"/>
+            </Button>
+
+        </UniformGrid>
+        <ListBox ItemsSource="{Binding Users}"
+                 HorizontalAlignment="Left"
+                 Width="238"
+                 Margin="0,239,0,20"
+                 x:Name="ViewerBox"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 BorderBrush="DarkGray"
+                 BorderThickness="2"
+                 Background="#B6CBBD">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <local:CurrentViewer ActiveViewer ="{Binding}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <local:StreamInformationControl Margin="250,0,0,0" Height="36" VerticalAlignment="Top"/>
+        <Label 
+            Margin="0,213,757,0"
+            Height="26"
+            VerticalAlignment="Top"
+            Content="Viewers in Chat"/>
     </Grid>
+
+
 </Window>
