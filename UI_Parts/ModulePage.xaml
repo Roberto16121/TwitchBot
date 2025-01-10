@@ -1,0 +1,39 @@
+﻿<Page x:Class="TwitchBot.UI_Parts.ModulePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TwitchBot.UI_Parts"
+      mc:Ignorable="d" 
+      d:DesignHeight="650" d:DesignWidth="1000"
+      Title="ModulePage">
+
+    <Grid Background="DarkCyan">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="500*"/>
+            <ColumnDefinition Width="501*"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Background="Cyan"
+                      VerticalScrollBarVisibility="Auto"
+                      Margin="1" 
+                      HorizontalAlignment="Left"
+                      Width="200"
+                      HorizontalScrollBarVisibility="Disabled">
+            <StackPanel x:Name="ModuleList">
+
+            </StackPanel>
+        </ScrollViewer>
+      
+        <Border Background="DarkCyan"
+                BorderBrush="DarkGray"
+                BorderThickness="1"
+                Margin="200,0,0,0"
+                CornerRadius="10" Grid.ColumnSpan="2">
+            <UserControl x:Name="ModuleSettings">
+
+            </UserControl>
+        </Border>
+
+
+    </Grid>
+</Page>

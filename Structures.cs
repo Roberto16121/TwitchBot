@@ -42,6 +42,46 @@ public enum ViewerType
     Normal
 }
 
+public enum ActionType
+{
+    Sound,
+    Obs,
+    Empty
+}
+
+public class ModuleData
+{
+    public string Name { get; set; } = string.Empty;
+    public HashSet<string> Keywords { get; set; } = new();
+    public ActionType Type { get; set; }
+    public CooldownData Cooldown { get; set; } = new();
+    public SoundData? Sound { get; set; }
+    public ObsData? Obs { get; set; }
+}
+
+public class CooldownData
+{
+    public int Cooldown { get; set; }
+    public bool CustomCooldown { get; set; }
+    public int ModeratorCooldown { get; set; }
+    public int VipCooldown { get; set; }
+    public int SubscriberCooldown { get; set; }
+}
+
+public class SoundData
+{
+    public string Location { get; set; } = string.Empty;
+    public int Volume { get; set; }
+    public bool Loop { get; set; }
+    public int LoopCount { get; set; }
+}
+
+public class ObsData
+{
+    // OBS specific
+}
+
+
 public static class Helper
 {
     public static ScrollViewer GetScrollViewer(DependencyObject element)

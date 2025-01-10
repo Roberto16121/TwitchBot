@@ -10,6 +10,7 @@
         MinWidth="600"
         Title="MainWindow" Height="650" Width="1000">
     <Grid Background="#A888B5">
+        <Frame x:Name="MainFrame"/>
         <ListBox 
             ItemsSource="{Binding Messages}"
             HorizontalContentAlignment="Stretch"
@@ -37,7 +38,8 @@
                  Background="#B6CBBD"
                  KeyDown="MessageBox_KeyDown"
                  Height="42"
-                 VerticalAlignment="Bottom">
+                 VerticalAlignment="Bottom"
+                 MaxLength="500">
 
         </TextBox>
 
