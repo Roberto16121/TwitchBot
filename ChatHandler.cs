@@ -12,16 +12,12 @@ using TwitchLib.Client.Events;
 
 namespace TwitchBot
 {
-    internal class ChatHandler
+    public class ChatHandler
     {
         public ObservableQueue<ChatMessage> Messages { get; private set; } = [];
 
         public ObservableCollection<ActiveViewer> Users { get; private set; } = [];
 
-        public ChatHandler()
-        {
-            
-        }
 
         public void AddMessage(OnMessageReceivedArgs e)
         {

@@ -18,15 +18,16 @@ namespace TwitchBot
         readonly Client client;
         NavigationService ns;
 
-        NavigationWindow navigationWdw;
+        NavigationWindow? navigationWdw;
 
         public MainWindow()
         {
             InitializeComponent();
             client = new();
 
-            client.OnMessageReceived += UpdateMessages;
-            DataContext = client.chatHandler;
+            System.Windows.MessageBox.Show("test");
+            client.ChatEventManager.OnMessageReceived += UpdateMessages;
+            DataContext = client.ChatHandler;
 
         }
 
@@ -40,11 +41,9 @@ namespace TwitchBot
         {
             Dispatcher.Invoke(() =>
             {
-                client.AddMessageToHandler(e);
+                client.ChatHandler.AddMessage(e);
 
                 var scrollViewer = Helper.GetScrollViewer(ChatBox);
-                if (scrollViewer == null)
-                    return;
 
                 bool isAtBottom = scrollViewer.VerticalOffset + scrollViewer.ViewportHeight >= scrollViewer.ExtentHeight;
                 if (!isAtBottom)
@@ -61,8 +60,8 @@ namespace TwitchBot
             {
                 if(MessageBox.Text != String.Empty)
                 {
-                    client.SendMessage(MessageBox.Text);
-                    client.AddMessageToHandler(client.username, MessageBox.Text);
+                    client.ChatEventManager.SendMessage(TwitchCredential.username, MessageBox.Text);
+                    client.ChatHandler.AddMessage(TwitchCredential.username, MessageBox.Text);
                     MessageBox.Text = String.Empty;
                 }
             }
@@ -102,6 +101,8 @@ namespace TwitchBot
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
+            if (navigationWdw == null)
+                return;
             if(navigationWdw.Content != null)
                 navigationWdw.Close();
         }
@@ -111,6 +112,6 @@ namespace TwitchBot
             navigationWdw?.Close();
             page = null;
         }
-
+        
     }
 }
