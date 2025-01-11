@@ -24,8 +24,7 @@ namespace TwitchBot
         {
             InitializeComponent();
             client = new();
-
-            System.Windows.MessageBox.Show("test");
+            
             client.ChatEventManager.OnMessageReceived += UpdateMessages;
             DataContext = client.ChatHandler;
 
@@ -74,6 +73,8 @@ namespace TwitchBot
             navigationWdw.Closed += page.PageIsClosing;
             navigationWdw.Navigate(page);
             navigationWdw.Show();
+            navigationWdw.MinHeight = 400;
+            navigationWdw.MinWidth = 800;
         }
 
         private void StatisticsButton_Click(object sender, RoutedEventArgs e)

@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 public class ChatMessage
@@ -44,9 +45,8 @@ public enum ViewerType
 
 public enum ActionType
 {
-    Sound,
-    Obs,
-    Empty
+    Sound = 0,
+    Obs = 1,
 }
 
 public class ModuleData
@@ -151,3 +151,4 @@ public class ObservableQueue<TItem> : Queue<TItem>, INotifyCollectionChanged, IN
 
     private void OnPropertyChanged() => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Count)));
 }
+

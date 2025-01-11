@@ -20,6 +20,7 @@ namespace TwitchBot
         public readonly ChatEventManager ChatEventManager;
         public readonly StreamInfoUpdater StreamInfoUpdater;
         public readonly ObsController ObsController;
+        public readonly ModuleManager ModuleManager;
         
         public static string BroadcasterColor = "#FF0000";
         public static string ModeratorColor = "#00FF00";
@@ -56,6 +57,7 @@ namespace TwitchBot
             StreamInfoUpdater.OnStreamInfoUpdated += HandleStreamInfoUpdated;
 
             ObsController = new();
+            ModuleManager = new();
         }
         
 

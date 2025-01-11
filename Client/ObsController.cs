@@ -1,3 +1,4 @@
+using System.Text;
 using System.Windows;
 using OBSWebsocketDotNet;
 using OBSWebsocketDotNet.Communication;
@@ -24,6 +25,8 @@ public class ObsController
             return;
         var sceneName = "Scene"; //setat in Obs Module
         var scene = obs.GetSceneItemId(sceneName, "Test", -1);
+
+        
         
         var test = obs.GetSourceActive("Test");
         if (test == null)
@@ -41,6 +44,11 @@ public class ObsController
     private void OnConnected(object sender, EventArgs e)
     {
         Connected = true;
+        return;
+        var t = obs.GetCurrentProgramScene();
+        StringBuilder sb = new(t);
+
+        MessageBox.Show(sb.ToString());
     }
 
     private void OnDisconnected(object sender, ObsDisconnectionInfo e)

@@ -1,0 +1,138 @@
+﻿<UserControl x:Class="TwitchBot.UI_Parts.ModuleSettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TwitchBot.UI_Parts"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="800">
+    <Grid Background="DarkCyan">
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <StackPanel>
+                <Line Width="800"
+                      Height="10"/>
+                <!--Module Name-->
+                <Border BorderThickness="1" 
+                        BorderBrush="DarkGray"
+                        CornerRadius="5"
+                        Height="40">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Module Name"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Width="400"
+                                   Padding="5,0,0,0"/>
+                        <TextBox x:Name="NameText"
+                                 HorizontalAlignment="Right"
+                                 VerticalAlignment="Center"
+                                 TextWrapping="Wrap"
+                                 FontSize="16"
+                                 FontWeight="Bold"
+                                 MaxLength="50"
+                                 Width="400"
+                                 KeyDown="NameText_OnKeyDown"/>
+                    </StackPanel>
+                    
+                </Border>
+                <Line Width="800"
+                      Height="10"/>
+                <!--Keywords-->
+                <Border BorderThickness="1" 
+                        BorderBrush="DarkGray"
+                        CornerRadius="5"
+                        Height="40">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Keywords separated by;"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Width="400"
+                                   Padding="5,0,0,0"/>
+                        <TextBox x:Name="KeywordsText"
+                                 HorizontalAlignment="Right"
+                                 VerticalAlignment="Center"
+                                 TextWrapping="Wrap"
+                                 FontSize="16"
+                                 FontWeight="Bold"
+                                 MaxLength="50"
+                                 Width="400"
+                                 KeyDown="KeywordsText_OnKeyDown"/>
+                    </StackPanel>
+                    
+                </Border>
+                
+                <Line Width="800"
+                      Height="10"/>
+                
+                <!--Cooldown-->
+                <Border BorderThickness="1" 
+                        BorderBrush="DarkGray"
+                        CornerRadius="5"
+                        Height="40">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Cooldown"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Width="400"
+                                   Padding="5,0,0,0"/>
+                        <Button x:Name="OpenCooldown"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Width="400"
+                                Height="30"
+                                Click="OpenCooldown_OnClick">
+                            <Label Content="Open Cooldown Settings"
+                                   FontSize="13"
+                                   FontWeight="Bold">
+                            </Label>
+                            
+                        </Button>
+                    </StackPanel>
+                </Border>
+                
+                <Line Width="800"
+                      Height="10"/>
+                
+                <!--Action Type-->
+                <Border BorderThickness="1" 
+                        BorderBrush="DarkGray"
+                        CornerRadius="5"
+                        Height="40">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Action Type"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Width="400"
+                                   Padding="5,0,0,0"/>
+                        <ComboBox x:Name="ActionTypeBox"
+                                  Width="200"
+                                  Text="What type of action"
+                                  ItemsSource="{Binding Actions}"
+                                  IsEditable="True"
+                                  IsReadOnly="True"
+                                  SelectedIndex="0"
+                                  FontSize="16"
+                                  FontWeight="Bold"
+                                  SelectionChanged="ActionTypeBox_OnSelectionChanged">
+                            <ComboBoxItem Content="Play Sound"
+                                          x:Name="Sound"/>
+                            <ComboBoxItem Content="OBS Action"
+                                          x:Name="OBS"/>
+                            
+                        </ComboBox>
+                    </StackPanel>
+                </Border>
+            <UserControl x:Name="ActionSettings"/>
+                
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

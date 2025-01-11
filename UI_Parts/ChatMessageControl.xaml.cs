@@ -9,9 +9,12 @@ namespace TwitchBot.UI_Parts
     {
 
         public ChatMessage thisMessage;
-        public ChatMessageControl()
+        private Module _module;
+        public ChatMessageControl(Module module)
         {
             InitializeComponent();
+            _module = module;
+            //Load values
         }
 
         // Dependency Property for ChatMessage

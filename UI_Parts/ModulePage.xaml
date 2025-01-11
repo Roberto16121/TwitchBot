@@ -6,6 +6,8 @@
       xmlns:local="clr-namespace:TwitchBot.UI_Parts"
       mc:Ignorable="d" 
       d:DesignHeight="650" d:DesignWidth="1000"
+      MinHeight="600"
+      MinWidth="800"
       Title="ModulePage">
 
     <Grid Background="DarkCyan">
@@ -20,7 +22,10 @@
                       Width="200"
                       HorizontalScrollBarVisibility="Disabled">
             <StackPanel x:Name="ModuleList">
-
+                <Button x:Name="AddModuleButton"
+                        Height="36"
+                        Content="New Module"
+                        Click="AddModuleButton_OnClick"/>
             </StackPanel>
         </ScrollViewer>
       

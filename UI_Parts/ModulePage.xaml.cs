@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace TwitchBot.UI_Parts
 {
@@ -20,17 +10,69 @@ namespace TwitchBot.UI_Parts
     /// </summary>
     public partial class ModulePage : Page
     {
-        MainWindow window;
+        private readonly MainWindow _window;
+        private ModuleSettingsControl? moduleSettings;
+        private readonly ModuleManager? _moduleManager;
+
+        private Module? _currentModule = null;
+        
         public ModulePage(MainWindow window)
         {
             InitializeComponent();
-            this.window = window;
-        }
-        public void PageIsClosing(object sender, EventArgs e)
-        {
-            window.ClosePage(this);
+            this._window = window;
+            _moduleManager = TwitchBot.ModuleManager.Instance;
+            DataContext = _moduleManager;
+            LoadModules();
         }
 
+        private void LoadModules()
+        {
+            if (_moduleManager == null)
+                return;
+            foreach (var item in _moduleManager.Modules)
+            {
+                ModuleButtonControl module = new(item);
+                ModuleList.Children.Add(module);
+                module.Clicked += SetModule;
+            }
+        }
+        
+        
+        public void PageIsClosing(object sender, EventArgs e)
+        {
+            if(moduleSettings != null)
+                moduleSettings.ClosePage();
+            _moduleManager?.SaveAllModules();
+            _window.ClosePage(this);
             
+        }
+
+        private int nr = 0;
+        private void AddModuleButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            string name = $"Module{nr++}";
+            Module temp = _moduleManager.AddNewModule(name);
+            ModuleButtonControl module = new(temp);
+            ModuleList.Children.Add(module);
+            module.Clicked += SetModule;
+        }
+        
+        private void SetModule(object sender, string name)
+        {
+            _currentModule = _moduleManager.GetModule(name);
+            if (_currentModule == null)
+                return;
+            UpdateUI();
+        }
+
+        private void UpdateUI()
+        {
+            if (moduleSettings != null)
+                moduleSettings.Reset();
+            
+            moduleSettings = new(_currentModule);
+            ModuleSettings.Content = moduleSettings;
+        }
+        
     }
 }

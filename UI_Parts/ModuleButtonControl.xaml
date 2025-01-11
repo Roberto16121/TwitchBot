@@ -1,0 +1,15 @@
+<UserControl x:Class="TwitchBot.UI_Parts.ModuleButtonControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:TwitchBot.UI_Parts"
+             mc:Ignorable="d"
+             d:DesignHeight="36" d:DesignWidth="200">
+    <Grid>
+        <Button x:Name="ModuleButton"
+                FontSize="16"
+                FontWeight="Bold"
+                Click="ModuleButton_OnClick"/>
+    </Grid>
+</UserControl>

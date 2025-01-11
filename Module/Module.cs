@@ -4,11 +4,9 @@ public class Module
 {
     #region Values
 
-    private string Name = "";
-    private List<string> Keywords = new();
-    
-    
-    private ActionType Type;
+    public string Name { get; private set; }= "";
+    public List<string> Keywords { get; private set; } = new();
+    public ActionType Type { get; private set; }
 
     public CooldownManager CooldownManager { get; private set; } = new();
     
@@ -20,14 +18,22 @@ public class Module
 
     #endregion Values
 
+    public EventHandler<string> NameChanged;
 
     #region Methods
 
     public Module(string name)
     {
         Name = name;
+        Type = ActionType.Sound;
     }
-    
+
+    public void SetName(string name)
+    {
+        Name = name;
+        NameChanged?.Invoke(this, Name);
+    }
+
     public void SetKeywords(string values) // either a single value or values with ; in between
     {
         string[] words = values.Split(';', StringSplitOptions.TrimEntries);
