@@ -34,10 +34,7 @@ public class ChatEventManager
     private async void HandleUserJoined(object sender, OnUserJoinedArgs e)
     {
         var viewer = await _viewerManager.GetViewerAsync(e.Username);
-        if (viewer != null)
-        {
-            _chatHandler.AddUser(viewer);
-        }
+        _chatHandler.AddUser(viewer);
     }
 
     private void HandleUserLeft(object sender, OnUserLeftArgs e)

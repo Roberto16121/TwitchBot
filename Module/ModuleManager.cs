@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows;
 using System.Windows.Documents;
 
 namespace TwitchBot;
@@ -9,7 +10,7 @@ public class ModuleManager
     public static ModuleManager? Instance { get; private set; }
     public List<Module> Modules { get;} = new();
 
-    public ModuleManager()
+    public ModuleManager(ChatHandler handler)
     {
         Instance ??= this;
         
@@ -20,6 +21,8 @@ public class ModuleManager
         if(!exists)
             System.IO.Directory.CreateDirectory(subPath);
         else LoadModules();
+
+        handler.MessageReceived += CheckForMatches;
     }
 
     void LoadModules()
@@ -35,7 +38,8 @@ public class ModuleManager
     public void SaveAllModules()
     {
         foreach (var module in Modules)
-            ModulePersistence.SaveModule(module, $@"Modules\{module.Name}.json");
+            if(module.Modified)
+                ModulePersistence.SaveModule(module, $@"Modules\{module.Id}.json");
     }
 
     public Module AddNewModule(string name)
@@ -49,8 +53,21 @@ public class ModuleManager
     {
         return Modules.Find(item => item.Name.Equals(name));
     }
-    
-    
+
+    public void CheckForMatches(object? sender, string message)
+    {
+        foreach (var module in Modules)
+        {
+            foreach (var value in module.Keywords)
+            {
+                if (message.Contains(value))
+                {
+                    MessageBox.Show(module.Name);
+                    return;
+                }
+            }
+        }
+    }
     
     
     

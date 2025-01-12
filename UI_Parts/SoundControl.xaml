@@ -7,7 +7,15 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="800">
     <Grid Background="DarkCyan">
+        
         <StackPanel>
+            <TextBlock Text="SOUND SETTINGS"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Margin="10,0,0,0"
+                       Foreground="Coral"/>
+            <Line Width="800"
+                  Height="10"/>
             <Border BorderThickness="1" 
                     BorderBrush="DarkGray"
                     CornerRadius="5"
@@ -20,14 +28,87 @@
                                FontWeight="Bold"
                                Width="400"
                                Padding="5,0,0,0"/>
-                    <TextBox x:Name="CooldownText"
+                    <TextBox x:Name="LocationText"
                              HorizontalAlignment="Right"
                              VerticalAlignment="Center"
                              TextWrapping="Wrap"
                              FontSize="16"
                              FontWeight="Bold"
                              MaxLength="50"
-                             Width="400"/>
+                             Width="400"
+                             TextChanged="LocationText_OnTextChanged"/>
+                </StackPanel>
+                
+            </Border>
+            <Line Width="800"
+                  Height="10"/>
+            <Border BorderThickness="1" 
+                    BorderBrush="DarkGray"
+                    CornerRadius="5"
+                    Height="40">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Sound Volume"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Width="400"
+                               Padding="5,0,0,0"/>
+                    <TextBox x:Name="VolumeText"
+                             HorizontalAlignment="Right"
+                             VerticalAlignment="Center"
+                             TextWrapping="Wrap"
+                             FontSize="16"
+                             FontWeight="Bold"
+                             MaxLength="50"
+                             Width="400"
+                             TextChanged="VolumeText_OnTextChanged"/>
+                </StackPanel>
+                
+            </Border>
+            <Line Width="800"
+                  Height="10"/>
+            <Border BorderThickness="1" 
+                    BorderBrush="DarkGray"
+                    CornerRadius="5"
+                    Height="40">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Loop Sound"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Width="400"
+                               Padding="5,0,0,0"/>
+                   <CheckBox x:Name="LoopBox"
+                             Click="LoopBox_OnClick"
+                             VerticalAlignment="Center"/>
+                </StackPanel>
+                
+            </Border>
+            <Line Width="800"
+                  Height="10"/>
+            <Border BorderThickness="1" 
+                    BorderBrush="DarkGray"
+                    CornerRadius="5"
+                    Height="40">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Loop Count"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Width="400"
+                               Padding="5,0,0,0"/>
+                    <TextBox x:Name="CountText"
+                             HorizontalAlignment="Right"
+                             VerticalAlignment="Center"
+                             TextWrapping="Wrap"
+                             FontSize="16"
+                             FontWeight="Bold"
+                             MaxLength="50"
+                             Width="400"
+                             TextChanged="CountText_OnTextChanged"/>
                 </StackPanel>
                 
             </Border>

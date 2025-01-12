@@ -30,7 +30,7 @@ namespace TwitchBot
 
         public static Client Instance { get; private set; }
 
-        public ChatHandler ChatHandler { get; }
+        public readonly ChatHandler ChatHandler;
 
         public Client()
         {
@@ -52,12 +52,12 @@ namespace TwitchBot
             );
             StreamInfoUpdater = new StreamInfoUpdater(
                 ConnectionManager.TwitchAPI,
-                "username"
+                TwitchCredential.username
             );
             StreamInfoUpdater.OnStreamInfoUpdated += HandleStreamInfoUpdated;
 
             ObsController = new();
-            ModuleManager = new();
+            ModuleManager = new(ChatHandler);
         }
         
 

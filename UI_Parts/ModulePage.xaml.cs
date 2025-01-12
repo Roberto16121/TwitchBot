@@ -62,14 +62,21 @@ namespace TwitchBot.UI_Parts
             _currentModule = _moduleManager.GetModule(name);
             if (_currentModule == null)
                 return;
+            
             UpdateUI();
+        }
+
+        private void DeleteModule()
+        {
+            
         }
 
         private void UpdateUI()
         {
             if (moduleSettings != null)
                 moduleSettings.Reset();
-            
+
+            moduleSettings = null;
             moduleSettings = new(_currentModule);
             ModuleSettings.Content = moduleSettings;
         }

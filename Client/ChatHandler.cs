@@ -18,6 +18,7 @@ namespace TwitchBot
 
         public ObservableCollection<ActiveViewer> Users { get; private set; } = [];
 
+        public EventHandler<string> MessageReceived;
 
         public void AddMessage(OnMessageReceivedArgs e)
         {
@@ -31,10 +32,11 @@ namespace TwitchBot
                 channel = e.ChatMessage.Channel,
                 messageId = e.ChatMessage.Id
             });
-            if(Messages.Count > 5)
+            if(Messages.Count > 50)
             {
                 Messages.Dequeue();
             }
+            MessageReceived?.Invoke(this, e.ChatMessage.Message);
         }
 
         public void AddMessage(string username, string messageText)
@@ -77,8 +79,7 @@ namespace TwitchBot
             Application.Current.Dispatcher.Invoke(() =>
             {
                 ActiveViewer viewer = Users.First(user => user.username.Equals(username));
-                if (viewer != null)
-                    Users.Remove(viewer);
+                Users.Remove(viewer);
             });
         }
 

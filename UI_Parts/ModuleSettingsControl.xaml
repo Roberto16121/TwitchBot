@@ -33,7 +33,7 @@
                                  FontWeight="Bold"
                                  MaxLength="50"
                                  Width="400"
-                                 KeyDown="NameText_OnKeyDown"/>
+                                 TextChanged="NameText_OnTextChanged"/>
                     </StackPanel>
                     
                 </Border>
@@ -60,7 +60,7 @@
                                  FontWeight="Bold"
                                  MaxLength="50"
                                  Width="400"
-                                 KeyDown="KeywordsText_OnKeyDown"/>
+                                 TextChanged="KeywordsText_OnTextChanged"/>
                     </StackPanel>
                     
                 </Border>
@@ -130,8 +130,17 @@
                         </ComboBox>
                     </StackPanel>
                 </Border>
-            <UserControl x:Name="ActionSettings"/>
-                
+                <Line Width="800"
+                      Height="10"/>
+                <UserControl x:Name="ActionSettings"/>
+                <Line Width="800"
+                      Height="10"/>
+                <Button x:Name="DeleteModule"
+                        Width="100"
+                        Height="30"
+                        Background="Red"
+                        Content="Delete"
+                        Click="DeleteModule_OnClick"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

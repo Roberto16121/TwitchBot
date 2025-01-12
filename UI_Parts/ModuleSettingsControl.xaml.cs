@@ -34,17 +34,7 @@ namespace TwitchBot.UI_Parts
                 _navigationWdw.Close();
         }
 
-        private void NameText_OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter && NameText.Text != String.Empty)
-                _currentModule.SetName(NameText.Text);
-        }
-
-        private void KeywordsText_OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if(e.Key == Key.Enter && NameText.Text != String.Empty)
-                _currentModule.SetKeywords(KeywordsText.Text);
-        }
+        
         CooldownPage page;
         
         private void InitializeNavigation()
@@ -77,7 +67,11 @@ namespace TwitchBot.UI_Parts
             SetName(_currentModule.Name);
             SetKeywords(_currentModule.Keywords);
             SetActionType((int)_currentModule.Type);
+            SetActionSettings();
+            firstTime = false;
         }
+
+        private bool firstTime = true;
 
         private void ActionTypeBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -85,6 +79,9 @@ namespace TwitchBot.UI_Parts
             if (_currentModule == null)
                 return;
             _currentModule.SetActionType(_type);
+            if(!firstTime)
+                _currentModule.SetModified();
+            SetActionSettings();
         }
 
         private void SetName(string name) =>
@@ -95,7 +92,49 @@ namespace TwitchBot.UI_Parts
 
         private void SetActionType(int type) =>
             ActionTypeBox.SelectedIndex = type;
+
+        private SoundControl _soundControl;
+        private ObsAction _obsAction;
         
+        private void SetActionSettings()
+        {
+            if (_type == ActionType.Sound)
+            {
+                _soundControl = new (_currentModule);
+                ActionSettings.Content = _soundControl;
+            }
+            else
+            {
+                _obsAction = new(_currentModule);
+                ActionSettings.Content = _obsAction;
+            }
+        }
         
+        private void KeywordsText_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(firstTime)
+                return;
+            if (KeywordsText.Text != String.Empty)
+            {
+                _currentModule.SetKeywords(KeywordsText.Text);
+                _currentModule.SetModified();
+            }
+        }
+
+        private void NameText_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(firstTime)
+                return;
+            if (NameText.Text != String.Empty)
+            {
+                _currentModule.SetName(NameText.Text);
+                _currentModule.SetModified();
+            }
+        }
+
+        private void DeleteModule_OnClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

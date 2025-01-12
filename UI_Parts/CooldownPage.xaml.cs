@@ -16,6 +16,7 @@ public partial class CooldownPage : Page
         LoadSettings();
     }
 
+    private bool firstTime = true;
     private void LoadSettings()
     {
         CooldownText.Text = _currentModule.CooldownManager.Cooldown.ToString();
@@ -23,42 +24,60 @@ public partial class CooldownPage : Page
         ModeratorText.Text = _currentModule.CooldownManager.ModeratorCooldown.ToString();
         SubscriberText.Text = _currentModule.CooldownManager.SubscriberCooldown.ToString();
         VipText.Text = _currentModule.CooldownManager.VipCooldown.ToString();
+        firstTime = false;
     }
     
 
-    public void PageIsClosing()
-    {
-        
-    }
-
     private static readonly Regex numbers = new Regex(@"^[0123456789]+$");
-    private void CooldownText_OnKeyDown(object sender, KeyEventArgs e)
-    {
-        if (e.Key == Key.Enter && numbers.IsMatch(CooldownText.Text))
-            _currentModule.CooldownManager.SetCooldown(CooldownText.Text);
-    }
 
     private void CustomCooldown_OnClick(object sender, RoutedEventArgs e)
     {
         _custom = !_custom;
         _currentModule.CooldownManager.SetCustomCooldown(_custom);
+        _currentModule.SetModified();
     }
 
-    private void ModeratorText_OnKeyDown(object sender, KeyEventArgs e)
+    private void CooldownText_OnTextChanged(object sender, TextChangedEventArgs e)
     {
-        if (e.Key == Key.Enter && numbers.IsMatch(ModeratorText.Text))
+        if (firstTime)
+            return;
+        if (numbers.IsMatch(CooldownText.Text))
+        {
+            _currentModule.CooldownManager.SetCooldown(CooldownText.Text);
+            _currentModule.SetModified();
+        }
+    }
+
+    private void ModeratorText_OnTextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (firstTime)
+            return;
+        if (numbers.IsMatch(ModeratorText.Text))
+        {
             _currentModule.CooldownManager.SetModeratorCooldown(ModeratorText.Text);
+            _currentModule.SetModified();
+        }
     }
 
-    private void SubscriberText_OnKeyDown(object sender, KeyEventArgs e)
+    private void SubscriberText_OnTextChanged(object sender, TextChangedEventArgs e)
     {
-        if (e.Key == Key.Enter && numbers.IsMatch(SubscriberText.Text))
+        if (firstTime)
+            return;
+        if (numbers.IsMatch(SubscriberText.Text))
+        {
             _currentModule.CooldownManager.SetSubscriberCooldown(SubscriberText.Text);
+            _currentModule.SetModified();
+        }
     }
 
-    private void VipText_OnKeyDown(object sender, KeyEventArgs e)
+    private void VipText_OnTextChanged(object sender, TextChangedEventArgs e)
     {
-        if (e.Key == Key.Enter && numbers.IsMatch(VipText.Text))
+        if (firstTime)
+            return;
+        if (numbers.IsMatch(VipText.Text))
+        {
             _currentModule.CooldownManager.SetVipCooldown(VipText.Text);
+            _currentModule.SetModified();
+        }
     }
 }

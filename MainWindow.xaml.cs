@@ -41,7 +41,7 @@ namespace TwitchBot
             Dispatcher.Invoke(() =>
             {
                 client.ChatHandler.AddMessage(e);
-
+                
                 var scrollViewer = Helper.GetScrollViewer(ChatBox);
 
                 bool isAtBottom = scrollViewer.VerticalOffset + scrollViewer.ViewportHeight >= scrollViewer.ExtentHeight;
@@ -79,7 +79,7 @@ namespace TwitchBot
 
         private void StatisticsButton_Click(object sender, RoutedEventArgs e)
         {
-
+                
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
@@ -102,6 +102,8 @@ namespace TwitchBot
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
+            client.ModuleManager.SaveAllModules();
+                
             if (navigationWdw == null)
                 return;
             if(navigationWdw.Content != null)

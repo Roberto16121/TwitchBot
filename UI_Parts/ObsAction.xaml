@@ -1,86 +1,34 @@
-<Page x:Class="TwitchBot.UI_Parts.CooldownPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:TwitchBot.UI_Parts"
-      mc:Ignorable="d"
-      Title="CooldownPage" Height="400" Width="800">
+<UserControl x:Class="TwitchBot.UI_Parts.ObsAction"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:TwitchBot.UI_Parts"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="800">
     <Grid Background="DarkCyan">
         <StackPanel>
-            <Border BorderThickness="1" 
-                    BorderBrush="DarkGray"
-                    CornerRadius="5"
-                    Height="40">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Cooldown (seconds)"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               FontSize="16"
-                               FontWeight="Bold"
-                               Width="400"
-                               Padding="5,0,0,0"/>
-                    <TextBox x:Name="CooldownText"
-                             HorizontalAlignment="Right"
-                             VerticalAlignment="Center"
-                             TextWrapping="Wrap"
-                             FontSize="16"
-                             FontWeight="Bold"
-                             MaxLength="50"
-                             Width="400"
-                             TextChanged="CooldownText_OnTextChanged"/>
-                </StackPanel>
-            </Border>
-            <Line Width="800"
-                  Height="10"/>
-            
-            <Border BorderThickness="1" 
-                    BorderBrush="DarkGray"
-                    CornerRadius="5"
-                    Height="40">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Custom Cooldown"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               FontSize="16"
-                               FontWeight="Bold"
-                               Width="400"
-                               Padding="5,0,0,0"/>
-                    <CheckBox x:Name="CustomCooldown"
-                             HorizontalAlignment="Right"
-                             VerticalAlignment="Center"
-                             FontWeight="Bold"
-                             Click="CustomCooldown_OnClick"/>
-                </StackPanel>
-            </Border>
-            <Border Height="5"
-                    Margin="0,10,0,0"
-                    Background="DarkSlateGray"/>
-            <Line Width="800"
-                  Height="10"/>
-            
-            <TextBlock Text="Viewer Type"
-                       Margin="10,0,0,0"
-                       FontSize="20"
+            <TextBlock Text="OBS SETTINGS"
+                       FontSize="16"
                        FontWeight="Bold"
+                       Margin="10,0,0,0"
                        Foreground="Coral"/>
             
             <Line Width="800"
                   Height="10"/>
-            
             <Border BorderThickness="1" 
                     BorderBrush="DarkGray"
                     CornerRadius="5"
                     Height="40">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Moderator (seconds)"
+                    <TextBlock Text="Source Name"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                FontSize="16"
                                FontWeight="Bold"
                                Width="400"
                                Padding="5,0,0,0"/>
-                    <TextBox x:Name="ModeratorText"
+                    <TextBox x:Name="SourceText"
                              HorizontalAlignment="Right"
                              VerticalAlignment="Center"
                              TextWrapping="Wrap"
@@ -88,26 +36,26 @@
                              FontWeight="Bold"
                              MaxLength="50"
                              Width="400"
-                             TextChanged="ModeratorText_OnTextChanged"/>
+                             TextChanged="SourceText_OnTextChanged"/>
                 </StackPanel>
+                
             </Border>
             
             <Line Width="800"
                   Height="10"/>
-            
             <Border BorderThickness="1" 
                     BorderBrush="DarkGray"
                     CornerRadius="5"
                     Height="40">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Subscriber (seconds)"
+                    <TextBlock Text="Duration"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                FontSize="16"
                                FontWeight="Bold"
                                Width="400"
                                Padding="5,0,0,0"/>
-                    <TextBox x:Name="SubscriberText"
+                    <TextBox x:Name="DurationText"
                              HorizontalAlignment="Right"
                              VerticalAlignment="Center"
                              TextWrapping="Wrap"
@@ -115,26 +63,47 @@
                              FontWeight="Bold"
                              MaxLength="50"
                              Width="400"
-                             TextChanged="SubscriberText_OnTextChanged"/>
+                             TextChanged="DurationText_OnTextChanged"/>
                 </StackPanel>
+                
             </Border>
             
             <Line Width="800"
                   Height="10"/>
-            
             <Border BorderThickness="1" 
                     BorderBrush="DarkGray"
                     CornerRadius="5"
                     Height="40">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="VIP (seconds)"
+                    <TextBlock Text="Loop Action"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                FontSize="16"
                                FontWeight="Bold"
                                Width="400"
                                Padding="5,0,0,0"/>
-                    <TextBox x:Name="VipText"
+                   <CheckBox x:Name="LoopBox"
+                             VerticalAlignment="Center"
+                             Click="LoopBox_OnClick"/>
+                </StackPanel>
+                
+            </Border>
+            
+            <Line Width="800"
+                  Height="10"/>
+            <Border BorderThickness="1" 
+                    BorderBrush="DarkGray"
+                    CornerRadius="5"
+                    Height="40">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Loop Count"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Width="400"
+                               Padding="5,0,0,0"/>
+                    <TextBox x:Name="CountText"
                              HorizontalAlignment="Right"
                              VerticalAlignment="Center"
                              TextWrapping="Wrap"
@@ -142,10 +111,10 @@
                              FontWeight="Bold"
                              MaxLength="50"
                              Width="400"
-                             TextChanged="VipText_OnTextChanged"/>
+                             TextChanged="CountText_OnTextChanged"/>
                 </StackPanel>
+                
             </Border>
-            
         </StackPanel>
     </Grid>
-</Page>
+</UserControl>

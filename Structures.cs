@@ -51,6 +51,7 @@ public enum ActionType
 
 public class ModuleData
 {
+    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public HashSet<string> Keywords { get; set; } = new();
     public ActionType Type { get; set; }
@@ -78,7 +79,10 @@ public class SoundData
 
 public class ObsData
 {
-    // OBS specific
+    public string SourceName { get; set; } = string.Empty;
+    public int Duration { get; set; }
+    public bool Loop { get; set; }
+    public int Count { get; set; }
 }
 
 
