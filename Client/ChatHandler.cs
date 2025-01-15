@@ -18,7 +18,7 @@ namespace TwitchBot
 
         public ObservableCollection<ActiveViewer> Users { get; private set; } = [];
 
-        public EventHandler<string> MessageReceived;
+        public EventHandler<OnMessageReceivedArgs> MessageReceived;
 
         public void AddMessage(OnMessageReceivedArgs e)
         {
@@ -36,7 +36,7 @@ namespace TwitchBot
             {
                 Messages.Dequeue();
             }
-            MessageReceived?.Invoke(this, e.ChatMessage.Message);
+            MessageReceived?.Invoke(this, e);
         }
 
         public void AddMessage(string username, string messageText)

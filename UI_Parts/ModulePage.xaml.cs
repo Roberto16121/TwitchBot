@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 
 namespace TwitchBot.UI_Parts
@@ -11,16 +10,17 @@ namespace TwitchBot.UI_Parts
     public partial class ModulePage : Page
     {
         private readonly MainWindow _window;
-        private ModuleSettingsControl? moduleSettings;
+        private ModuleSettingsControl? _moduleSettings;
         private readonly ModuleManager? _moduleManager;
 
-        private Module? _currentModule = null;
+        private Module? _currentModule;
+        private List<ModuleButtonControl> _controlList = new();
         
         public ModulePage(MainWindow window)
         {
             InitializeComponent();
-            this._window = window;
-            _moduleManager = TwitchBot.ModuleManager.Instance;
+            _window = window;
+            _moduleManager = ModuleManager.Instance;
             DataContext = _moduleManager;
             LoadModules();
         }
@@ -32,6 +32,7 @@ namespace TwitchBot.UI_Parts
             foreach (var item in _moduleManager.Modules)
             {
                 ModuleButtonControl module = new(item);
+                _controlList.Add(module);
                 ModuleList.Children.Add(module);
                 module.Clicked += SetModule;
             }
@@ -40,45 +41,60 @@ namespace TwitchBot.UI_Parts
         
         public void PageIsClosing(object sender, EventArgs e)
         {
-            if(moduleSettings != null)
-                moduleSettings.ClosePage();
+            if(_moduleSettings != null)
+                _moduleSettings.ClosePage();
             _moduleManager?.SaveAllModules();
             _window.ClosePage(this);
             
         }
 
-        private int nr = 0;
+        private int _nr;
         private void AddModuleButton_OnClick(object sender, RoutedEventArgs e)
         {
-            string name = $"Module{nr++}";
-            Module temp = _moduleManager.AddNewModule(name);
+            string name = $"Module{_nr++}";
+            Module? temp = _moduleManager?.AddNewModule(name);
+            if (temp == null)
+                return;
             ModuleButtonControl module = new(temp);
+            _controlList.Add(module);
             ModuleList.Children.Add(module);
             module.Clicked += SetModule;
         }
         
-        private void SetModule(object sender, string name)
+        private void SetModule(object? sender, string name)
         {
-            _currentModule = _moduleManager.GetModule(name);
+            _currentModule = _moduleManager?.GetModule(name);
             if (_currentModule == null)
                 return;
+            _currentModule.Deleted += DeleteModule;
             
-            UpdateUI();
+            UpdateUi();
         }
 
-        private void DeleteModule()
+        private void DeleteModule(object? sender, EventArgs e)
         {
-            
+            if (_currentModule == null)
+                return;
+            int index = _controlList.FindIndex(s => s.Name == _currentModule.Name);
+            ModuleList.Children.RemoveAt(index+1);
+            _controlList.RemoveAt(index);
+            _moduleSettings?.ClosePage();
+            _moduleSettings = null;
+            ModuleSettings.Content = null;
+            _moduleManager?.DeleteModule(_currentModule);
+            _currentModule = null;
         }
 
-        private void UpdateUI()
+        private void UpdateUi()
         {
-            if (moduleSettings != null)
-                moduleSettings.Reset();
+            if (_moduleSettings != null)
+                _moduleSettings.Reset();
+            if (_currentModule == null)
+                return;
 
-            moduleSettings = null;
-            moduleSettings = new(_currentModule);
-            ModuleSettings.Content = moduleSettings;
+            _moduleSettings = null;
+            _moduleSettings = new(_currentModule);
+            ModuleSettings.Content = _moduleSettings;
         }
         
     }

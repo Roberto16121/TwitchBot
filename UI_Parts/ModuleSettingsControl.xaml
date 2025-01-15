@@ -12,6 +12,28 @@
             <StackPanel>
                 <Line Width="800"
                       Height="10"/>
+                <Border BorderThickness="1" 
+                        BorderBrush="DarkGray"
+                        CornerRadius="5"
+                        Height="40">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="ENABLED"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Width="400"
+                                   Padding="5,0,0,0"/>
+                        <ToggleButton Width="100"
+                                      x:Name="State"
+                                      Content="ON"
+                                      Background="White"
+                                      Click="State_OnClick"/>
+                    </StackPanel>
+                    
+                </Border>
+                    <Line Width="800"
+                          Height="10"/>
                 <!--Module Name-->
                 <Border BorderThickness="1" 
                         BorderBrush="DarkGray"

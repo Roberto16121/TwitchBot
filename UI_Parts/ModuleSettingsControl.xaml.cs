@@ -1,8 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using System.Text;
+﻿
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Navigation;
 
 
@@ -13,20 +12,20 @@ namespace TwitchBot.UI_Parts
     /// </summary>
     public partial class ModuleSettingsControl : UserControl
     {
-        NavigationWindow? _navigationWdw;
+        private NavigationWindow? _navigationWdw;
         private ActionType _type = ActionType.Sound;
-        private Module? _currentModule;
+        private readonly Module _currentModule;
+        private bool _enabled = true;
+        private bool isInit = false;
         public ModuleSettingsControl(Module module)
         {
             InitializeComponent();
+            isInit = true;
             _currentModule = module;
             LoadSettings();
         }
-        public void ClosePage()
-        {
-            if(_navigationWdw != null)
-                _navigationWdw.Close();
-        }
+        public void ClosePage() =>
+            _navigationWdw?.Close();
 
         public void Reset()
         {
@@ -35,54 +34,62 @@ namespace TwitchBot.UI_Parts
         }
 
         
-        CooldownPage page;
+        CooldownPage? _page;
         
         private void InitializeNavigation()
         {
-            _navigationWdw = new NavigationWindow();
-            _navigationWdw.Height = 400;
-            _navigationWdw.Width = 800;
-            _navigationWdw.ShowsNavigationUI = false;
+            _navigationWdw = new()
+            {
+                Height = 400,
+                Width = 800,
+                ShowsNavigationUI = false
+            };
         }
         
         private void OpenCooldown_OnClick(object sender, RoutedEventArgs e)
         {
             InitializeNavigation();
-            page = new(_currentModule);
+            _page = new(_currentModule);
             _navigationWdw.Closed += PageIsClosing;
-            _navigationWdw.Navigate(page);
+            _navigationWdw.Navigate(_page);
             _navigationWdw.Show();
             _navigationWdw.ResizeMode = ResizeMode.NoResize;
         }
 
-        private void PageIsClosing(object sender, EventArgs e)
+        private void PageIsClosing(object? sender, EventArgs e)
         {
-            page = null;
+            _page = null;
             _navigationWdw = null;
         }
 
 
         private void LoadSettings()
         {
+            _enabled = _currentModule.Enabled;
+            
             SetName(_currentModule.Name);
             SetKeywords(_currentModule.Keywords);
             SetActionType((int)_currentModule.Type);
             SetActionSettings();
-            firstTime = false;
+            _firstTime = false;
         }
 
-        private bool firstTime = true;
+        private bool _firstTime = true;
 
         private void ActionTypeBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _type = ActionTypeBox.SelectedIndex == 0 ? ActionType.Sound : ActionType.Obs;
-            if (_currentModule == null)
+            if (!isInit)
                 return;
+            
             _currentModule.SetActionType(_type);
-            if(!firstTime)
+            if (!_firstTime)
                 _currentModule.SetModified();
             SetActionSettings();
         }
+        
+
+        
 
         private void SetName(string name) =>
             NameText.Text = name;
@@ -112,7 +119,7 @@ namespace TwitchBot.UI_Parts
         
         private void KeywordsText_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if(firstTime)
+            if(_firstTime)
                 return;
             if (KeywordsText.Text != String.Empty)
             {
@@ -123,7 +130,7 @@ namespace TwitchBot.UI_Parts
 
         private void NameText_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if(firstTime)
+            if(_firstTime)
                 return;
             if (NameText.Text != String.Empty)
             {
@@ -134,7 +141,29 @@ namespace TwitchBot.UI_Parts
 
         private void DeleteModule_OnClick(object sender, RoutedEventArgs e)
         {
+            _currentModule.Delete();
+        }
+
+        private void SetState()
+        {
+            State.IsChecked = _enabled;
+            if (_enabled)
+            {
+                State.Background = Brushes.White;
+                State.Content = "ON";
+            }
+            else
+            {
+                State.Background = Brushes.Gray;
+                State.Content = "OFF";
+            }
+        }
             
+        private void State_OnClick(object sender, RoutedEventArgs e)
+        {
+            _enabled = !_enabled;
+            _currentModule.SetEnable(_enabled);
+            SetState();
         }
     }
 }

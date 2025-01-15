@@ -67,5 +67,20 @@ public partial class SoundControl : UserControl
         }
     }
 
-    
+
+    private void SelectFile_OnClick(object sender, RoutedEventArgs e)
+    {
+        var fileDialog = new System.Windows.Forms.OpenFileDialog();
+        var result = fileDialog.ShowDialog();
+        switch (result)
+        {
+            case System.Windows.Forms.DialogResult.OK:
+                var file = fileDialog.FileName;
+                LocationText.Text = file;
+                break;
+            case System.Windows.Forms.DialogResult.Cancel:
+            default:
+                break;
+        }
+    }
 }

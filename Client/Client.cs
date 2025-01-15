@@ -21,6 +21,8 @@ namespace TwitchBot
         public readonly StreamInfoUpdater StreamInfoUpdater;
         public readonly ObsController ObsController;
         public readonly ModuleManager ModuleManager;
+        public readonly SoundController SoundController;
+        
         
         public static string BroadcasterColor = "#FF0000";
         public static string ModeratorColor = "#00FF00";
@@ -31,17 +33,18 @@ namespace TwitchBot
         public static Client Instance { get; private set; }
 
         public readonly ChatHandler ChatHandler;
+        public readonly TwitchConfiguration Configuration;
 
         public Client()
         {
+            Configuration = new();
             Instance ??= this;
-            ConnectionManager = new ConnectionManager(TwitchCredential.username,
-                TwitchCredential.accessToken, TwitchCredential.clientID);
+            ConnectionManager = new ConnectionManager(Configuration.Username,
+                Configuration.AccessToken, Configuration.ClientId);
             ConnectionManager.Connect();
-
-            string broadcasterId = "474003800"; // Fetch from Twitch API
-            ViewerManager = new ViewerManager(ConnectionManager.TwitchAPI, broadcasterId);
-            ModerationManager = new ModerationManager(ConnectionManager.TwitchAPI, broadcasterId);
+            
+            ViewerManager = new ViewerManager(ConnectionManager.TwitchAPI, Configuration.BroadcasterId);
+            ModerationManager = new ModerationManager(ConnectionManager.TwitchAPI, Configuration.BroadcasterId, Configuration.AccessToken);
 
             ChatHandler = new ChatHandler();
 
@@ -52,12 +55,13 @@ namespace TwitchBot
             );
             StreamInfoUpdater = new StreamInfoUpdater(
                 ConnectionManager.TwitchAPI,
-                TwitchCredential.username
+                Configuration.Username
             );
             StreamInfoUpdater.OnStreamInfoUpdated += HandleStreamInfoUpdated;
 
             ObsController = new();
             ModuleManager = new(ChatHandler);
+            SoundController = new();
         }
         
 

@@ -1,0 +1,6 @@
+{
+  "Username": "YourTwitchUsername",
+  "AccessToken": "YourAccessTokenHere",
+  "ClientId": "YourClientIDHere",
+  "BroadcasterId": "YourUserIDHere"
+}

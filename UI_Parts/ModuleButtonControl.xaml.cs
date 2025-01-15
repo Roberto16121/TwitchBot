@@ -5,25 +5,26 @@ namespace TwitchBot.UI_Parts;
 
 public partial class ModuleButtonControl : UserControl
 {
-    public EventHandler<string> Clicked;
-    private string _name;
+    public EventHandler<string>? Clicked;
+    public string Name { get; private set; }
+
     public ModuleButtonControl(Module module)
     {
         InitializeComponent();
-        _name = module.Name;
-        ModuleButton.Content = _name;
+        Name = module.Name;
+        ModuleButton.Content = Name;
         module.NameChanged += NameChanged;
 
     }
 
-    private void NameChanged(object sender, string name)
+    private void NameChanged(object? sender, string name)
     {
-        _name = name;
-        ModuleButton.Content = _name;
+        Name = name;
+        ModuleButton.Content = Name;
     }
 
     private void ModuleButton_OnClick(object sender, RoutedEventArgs e)
     {
-        Clicked?.Invoke(this, _name);
+        Clicked?.Invoke(this, Name);
     }
 }

@@ -59,8 +59,8 @@ namespace TwitchBot
             {
                 if(MessageBox.Text != String.Empty)
                 {
-                    client.ChatEventManager.SendMessage(TwitchCredential.username, MessageBox.Text);
-                    client.ChatHandler.AddMessage(TwitchCredential.username, MessageBox.Text);
+                    client.ChatEventManager.SendMessage(client.Configuration.Username, MessageBox.Text);
+                    client.ChatHandler.AddMessage(client.Configuration.Username, MessageBox.Text);
                     MessageBox.Text = String.Empty;
                 }
             }

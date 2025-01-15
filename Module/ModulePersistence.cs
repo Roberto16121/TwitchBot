@@ -27,4 +27,10 @@ public static class ModulePersistence
 
         return Module.FromSerializableData(data);
     }
+
+    public static void DeteleFile(string filePath)
+    {
+        if(File.Exists(filePath))
+            File.Delete(filePath);
+    }
 }

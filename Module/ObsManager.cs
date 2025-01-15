@@ -4,7 +4,7 @@ namespace TwitchBot;
 
 public class ObsManager
 {
-    public string SourceName { get; private set; } = "Test";
+    public string SourceName { get; private set; }
     public int Duration { get; private set; } = 1;
     public bool Loop { get; private set; }
     public int Count { get; private set; }
@@ -18,7 +18,7 @@ public class ObsManager
         {
             Duration = int.Parse(value);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             MessageBox.Show("Invalid Input");
         }
@@ -36,7 +36,7 @@ public class ObsManager
         {
             Count = int.Parse(value);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             MessageBox.Show("Invalid Input");
         }

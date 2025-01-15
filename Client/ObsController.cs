@@ -10,32 +10,34 @@ public class ObsController
 {
     private readonly OBSWebsocket obs;
     private bool Connected;
+    private ObsManager _manager;
+    public static ObsController Instance { get; private set; }
     public ObsController()
     {
         obs = new();
         Connect();
-
+        Instance = this;
         obs.Connected += OnConnected;
         obs.Disconnected += OnDisconnected;
     }
 
-    public async Task GetScene()
+    private async Task GetScene()
     {
         if (!Connected)
             return;
-        var sceneName = "Scene"; //setat in Obs Module
-        var scene = obs.GetSceneItemId(sceneName, "Test", -1);
+        var sceneName = "TwitchBot"; //setat in Obs Module
+        var scene = obs.GetSceneItemId(sceneName, _manager.SourceName, -1);
 
         
         
-        var test = obs.GetSourceActive("Test");
+        var test = obs.GetSourceActive(_manager.SourceName);
         if (test == null)
         {
             MessageBox.Show("Source not found");
             return;
         }
         obs.SetSceneItemEnabled(sceneName, scene, true);
-        await Task.Delay(3 * 1000);//3 -> secunde setate in Obs Module
+        await Task.Delay(_manager.Duration * 1000);
         obs.SetSceneItemEnabled(sceneName, scene, false);
         
 
@@ -59,5 +61,11 @@ public class ObsController
     public void Connect()
     {
         obs.ConnectAsync("ws://localhost:4455", TwitchCredential.Password);
+    }
+
+    public async Task Execute(ObsManager manager)
+    {
+        _manager = manager;
+        await GetScene();
     }
 }

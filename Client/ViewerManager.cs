@@ -4,11 +4,13 @@ namespace TwitchBot;
 
 public class ViewerManager
 {
+    public static ViewerManager Instace { get; private set; }
     private readonly TwitchAPI _twitchAPI;
     private readonly string _broadcasterId;
 
     public ViewerManager(TwitchAPI twitchAPI, string broadcasterId)
     {
+        Instace ??= this;
         _twitchAPI = twitchAPI;
         _broadcasterId = broadcasterId;
     }

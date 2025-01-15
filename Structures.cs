@@ -51,6 +51,7 @@ public enum ActionType
 
 public class ModuleData
 {
+    public bool Enabled { get; set; }
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public HashSet<string> Keywords { get; set; } = new();
@@ -83,6 +84,14 @@ public class ObsData
     public int Duration { get; set; }
     public bool Loop { get; set; }
     public int Count { get; set; }
+}
+
+public class TwitchConfig()
+{
+    public string Username { get; set; }
+    public string AccessToken { get; set; }
+    public string ClientId { get; set; }
+    public string BroadcasterId { get; set; }
 }
 
 
