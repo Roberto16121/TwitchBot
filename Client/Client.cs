@@ -1,12 +1,4 @@
 ﻿
-using TwitchLib.Client;
-using TwitchLib.Client.Events;
-using TwitchLib.Client.Models;
-using TwitchLib.Communication.Clients;
-using TwitchLib.Communication.Models;
-using TwitchLib.Api;
-using TwitchLib.Api.Helix.Models.Moderation.BanUser;
-using System.Windows.Threading;
 using System.Windows;
 using TwitchBot.UI_Parts;
 
@@ -22,6 +14,8 @@ namespace TwitchBot
         public readonly ObsController ObsController;
         public readonly ModuleManager ModuleManager;
         public readonly SoundController SoundController;
+        public readonly Database.Database Database;
+        
         
         
         public static string BroadcasterColor = "#FF0000";
@@ -44,9 +38,11 @@ namespace TwitchBot
             ConnectionManager.Connect();
             
             ViewerManager = new ViewerManager(ConnectionManager.TwitchAPI, Configuration.BroadcasterId);
-            ModerationManager = new ModerationManager(ConnectionManager.TwitchAPI, Configuration.BroadcasterId, Configuration.AccessToken);
-
             ChatHandler = new ChatHandler();
+            
+            ModerationManager = new ModerationManager(ConnectionManager.TwitchAPI, Configuration.BroadcasterId,
+                Configuration.AccessToken, ChatHandler);
+
 
             ChatEventManager = new ChatEventManager(
                 ConnectionManager.TwitchClient,
@@ -62,6 +58,8 @@ namespace TwitchBot
             ObsController = new();
             ModuleManager = new(ChatHandler);
             SoundController = new();
+            Database = new();
+            Database.InitializeUsers();
         }
         
 

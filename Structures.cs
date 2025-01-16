@@ -10,24 +10,26 @@ using System.Windows.Media;
 public class ChatMessage
 {
     public string username = "";
+    public string userId = "";
     public string messageText = "";
     public DateTime sentTime;
     public bool isModerator;
     public bool isSubscriber;
     public bool isVIP;
     public string userColor = "";
-    public string channel = "";
     public string messageId = "";
 }
 
 public class ActiveViewer
 {
+    public string userId = "";
     public string username = "";
     public ViewerType viewerType;
     public string userColor = "";
 
-    public ActiveViewer(string name, ViewerType type, string color)
+    public ActiveViewer(string id , string name, ViewerType type, string color)
     {
+        userId = id;
         username = name;
         viewerType = type;
         userColor = color;
@@ -36,11 +38,11 @@ public class ActiveViewer
 
 public enum ViewerType
 {
-    Broadcaster,
-    Moderator,
-    VIP,
-    Subscriber,
-    Normal
+    Broadcaster = 0,
+    Moderator = 1,
+    VIP = 2,
+    Subscriber = 3,
+    Normal = 4
 }
 
 public enum ActionType

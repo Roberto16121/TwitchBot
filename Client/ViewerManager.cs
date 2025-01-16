@@ -40,7 +40,7 @@ public class ViewerManager
         if (subs.Data.Any(s => s.UserId == id) && type == ViewerType.Normal)
             type = ViewerType.Subscriber;
 
-        return new ActiveViewer(username, type, GetColorForType(type));
+        return new ActiveViewer(id, username, type, GetColorForType(type));
     }
 
     private string GetColorForType(ViewerType type) =>

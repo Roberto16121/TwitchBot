@@ -4,11 +4,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using TwitchBot.UI_Parts;
 using TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions;
 using TwitchLib.Client.Events;
+using Application = System.Windows.Application;
 
 namespace TwitchBot
 {
@@ -18,18 +19,18 @@ namespace TwitchBot
 
         public ObservableCollection<ActiveViewer> Users { get; private set; } = [];
 
-        public EventHandler<OnMessageReceivedArgs> MessageReceived;
+        public EventHandler<OnMessageReceivedArgs>? MessageReceived;
 
         public void AddMessage(OnMessageReceivedArgs e)
         {
             Messages.Enqueue(new ChatMessage
             {
+                userId = e.ChatMessage.UserId,
                 username = e.ChatMessage.Username,
                 messageText = e.ChatMessage.Message,
                 sentTime = DateTime.Now,
                 isModerator = e.ChatMessage.IsModerator || e.ChatMessage.IsBroadcaster,
                 userColor = e.ChatMessage.ColorHex,
-                channel = e.ChatMessage.Channel,
                 messageId = e.ChatMessage.Id
             });
             if(Messages.Count > 50)
@@ -39,7 +40,7 @@ namespace TwitchBot
             MessageReceived?.Invoke(this, e);
         }
 
-        public void AddMessage(string username, string messageText)
+        public void AddMessage(string username, string messageText) // sent from app
         {
             Messages.Enqueue(new ChatMessage
             {
@@ -49,6 +50,48 @@ namespace TwitchBot
                 isModerator = true,
                 userColor = "#FF0000"
             });
+        }
+        
+        public void DeleteAllMessages(string userId)
+        {
+            ChatMessage[] toReturn = new ChatMessage[Messages.Count];
+            Messages.CopyTo(toReturn, 0);
+            Messages.Clear();
+            foreach (var message in toReturn)
+            {
+                if (message.userId != userId)
+                    Messages.Enqueue(new ChatMessage()
+                    {
+                        userId = message.userId,
+                        username = message.username,
+                        messageText = message.messageText,
+                        sentTime = message.sentTime,
+                        isModerator = message.isModerator,
+                        userColor = message.userColor,
+                        messageId = message.messageId
+                    });
+            }
+        }
+        
+        public void DeleteMessageLocally(string messageId)
+        {
+            ChatMessage[] toReturn = new ChatMessage[Messages.Count];
+            Messages.CopyTo(toReturn, 0);
+            Messages.Clear();
+            foreach (var message in toReturn)
+            {
+                if (message.messageId != messageId)
+                    Messages.Enqueue(new ChatMessage()
+                    {
+                        userId = message.userId,
+                        username = message.username,
+                        messageText = message.messageText,
+                        sentTime = message.sentTime,
+                        isModerator = message.isModerator,
+                        userColor = message.userColor,
+                        messageId = message.messageId
+                    });
+            }
         }
 
         public void AddUser(ActiveViewer viewer)
