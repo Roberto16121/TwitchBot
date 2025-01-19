@@ -1,5 +1,6 @@
 ﻿
 using System.Windows;
+using TwitchBot.Database;
 using TwitchBot.UI_Parts;
 
 namespace TwitchBot
@@ -10,11 +11,13 @@ namespace TwitchBot
         public readonly ViewerManager ViewerManager;
         public readonly ModerationManager ModerationManager;
         public readonly ChatEventManager ChatEventManager;
+        public readonly ModuleManager ModuleManager;
+        public readonly ChatHandler ChatHandler;
+        public readonly Database.Database Database;
         public readonly StreamInfoUpdater StreamInfoUpdater;
         public readonly ObsController ObsController;
-        public readonly ModuleManager ModuleManager;
         public readonly SoundController SoundController;
-        public readonly Database.Database Database;
+        public readonly TwitchConfiguration Configuration;
         
         
         
@@ -23,11 +26,8 @@ namespace TwitchBot
         public static string SubscriberColor = "#F020D8";
         public static string NormalColor = "#000000";
 
-
         public static Client Instance { get; private set; }
-
-        public readonly ChatHandler ChatHandler;
-        public readonly TwitchConfiguration Configuration;
+        
 
         public Client()
         {
@@ -58,8 +58,14 @@ namespace TwitchBot
             ObsController = new();
             ModuleManager = new(ChatHandler);
             SoundController = new();
+            
             Database = new();
             Database.InitializeUsers();
+            
+            using (var context = new AppDbContext())
+            {
+                context.Database.EnsureCreated();
+            }
         }
         
 

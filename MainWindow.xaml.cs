@@ -1,11 +1,14 @@
 ﻿using System.Windows;
 using TwitchLib.Client.Events;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using System.Windows.Threading;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using TwitchBot.UI_Parts;
+using TwitchBot.UI.Statistics;
 using TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions;
 
 namespace TwitchBot
@@ -23,6 +26,7 @@ namespace TwitchBot
         public MainWindow()
         {
             InitializeComponent();
+
             client = new();
             
             client.ChatEventManager.OnMessageReceived += UpdateMessages;
@@ -79,7 +83,13 @@ namespace TwitchBot
 
         private void StatisticsButton_Click(object sender, RoutedEventArgs e)
         {
-                
+            InitializeNavigation();
+            StatisticsPage page = new();
+            //navigationWdw.Closed += page.PageIsClosing;
+            navigationWdw.Navigate(page);
+            navigationWdw.Show();
+            navigationWdw.MinHeight = 650;
+            navigationWdw.MinWidth = 1000;
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
