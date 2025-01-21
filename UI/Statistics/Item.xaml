@@ -1,0 +1,54 @@
+<UserControl x:Class="TwitchBot.UI.Statistics.Item"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:TwitchBot.UI.Statistics"
+             mc:Ignorable="d"
+             d:DesignHeight="40" d:DesignWidth="900"
+             Background="Transparent">
+    <Grid>
+        <Border BorderThickness="1"
+                BorderBrush="Black"
+                CornerRadius="5"
+                VerticalAlignment="Center">
+            <UniformGrid Rows="1"
+                         Height="35"
+                         VerticalAlignment="Stretch"
+                         HorizontalAlignment="Stretch">
+                <TextBlock x:Name="Item1"
+                           Width="200"
+                           HorizontalAlignment="Stretch"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Background="Aqua"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"/>
+                <TextBlock x:Name="Item2"
+                           Width="200"
+                           HorizontalAlignment="Stretch"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Background="Aqua"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"/>
+                <TextBlock x:Name="Item3"
+                           Width="200"
+                           HorizontalAlignment="Stretch"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Background="Aqua"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"/>
+                <TextBlock x:Name="Item4"
+                           Width="200"
+                           HorizontalAlignment="Stretch"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Background="Aqua"
+                           VerticalAlignment="Center"
+                           TextAlignment="Center"/>
+            </UniformGrid>
+        </Border>
+    </Grid>
+</UserControl>

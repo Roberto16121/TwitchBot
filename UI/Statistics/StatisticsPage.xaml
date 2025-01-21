@@ -9,38 +9,47 @@
       d:DesignHeight="650" d:DesignWidth="1000"
       MinHeight="650"
       MinWidth="1000">
-    <Grid>
-        <StackPanel>
+    <Grid VerticalAlignment="Stretch">
+        <Grid VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal"
-                             Height="50"
-                             Width="1000"
-                             MinWidth="250">
+                            Height="50"
+                            Width="1000"
+                            MinWidth="250">
                 <Line Width="50"/>
                 <Button x:Name="DaysAll"
                         Width="120"
                         Height="40"
-                        Content="All Time"/>
+                        Content="All Time"
+                        Click="DaysAll_OnClick"/>
                 
                 <Line Width="50"/>
                 
                 <Button x:Name="Days30"
                         Width="120"
                         Height="40"
-                        Content="30 Days"/>
+                        Content="30 Days"
+                        Click="Days30_OnClick"/>
                 
                 <Line Width="50"/>
                 
                 <Button x:Name="Days7"
                         Width="120"
                         Height="40"
-                        Content="7 Days"/>
+                        Content="7 Days"
+                        Click="Days7_OnClick"/>
                 
                 <Line Width="50"/>
                 
                 <Button x:Name="DayToday"
                         Width="120"
                         Height="40"
-                        Content="Today"/>
+                        Content="Today"
+                        Click="DayToday_OnClick"/>
                 
                 <Line Width="200"/>
                 
@@ -48,17 +57,21 @@
                         Width="50"
                         Height="40"
                         Content="User"
-                        HorizontalAlignment="Right"/>
+                        HorizontalAlignment="Right"
+                        Click="UserMod_OnClick"/>
                 <Button x:Name="ModuleMod"
                         Width="50"
                         Height="40"
                         Content="Module"
-                        HorizontalAlignment="Right"/>
+                        HorizontalAlignment="Right"
+                        Click="ModuleMod_OnClick"/>
                 </StackPanel>
-                <UserControl x:Name="Filters"
-                             HorizontalAlignment="Stretch"/>
-                <UserControl x:Name="Stats"
-                             HorizontalAlignment="Stretch"/>
-        </StackPanel>
+                <local:FilterControl x:Name="FilterControl"
+                                     Grid.Row="1"/>
+                <UserControl x:Name = "Stats"
+                             VerticalAlignment="Stretch"
+                             Grid.Row="2"/>
+
+        </Grid>
     </Grid>
 </Page>

@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using TwitchBot.UI.Statistics;
 
 public class ChatMessage
 {
@@ -19,6 +20,7 @@ public class ChatMessage
     public string userColor = "";
     public string messageId = "";
 }
+
 
 public class ActiveViewer
 {
