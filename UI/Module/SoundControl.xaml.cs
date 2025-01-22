@@ -71,6 +71,7 @@ public partial class SoundControl : UserControl
     private void SelectFile_OnClick(object sender, RoutedEventArgs e)
     {
         var fileDialog = new System.Windows.Forms.OpenFileDialog();
+        fileDialog.Filter = "Audio File|*.mp3;*.wav";
         var result = fileDialog.ShowDialog();
         switch (result)
         {
