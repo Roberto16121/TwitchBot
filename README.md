@@ -114,6 +114,8 @@ OBS ACTION Setup:
 * Statistics : (To be developed)
 * Settings : (To be developed)
 
+  ![](https://github.com/Roberto16121/TwitchBot/blob/master/_Github/Demonstation.gif)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
