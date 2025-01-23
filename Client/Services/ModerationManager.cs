@@ -5,6 +5,7 @@ namespace TwitchBot;
 
 public class ModerationManager
 {
+    public static ModerationManager Instance { get; private set; }
     private readonly TwitchAPI _twitchAPI;
     private readonly string _broadcasterId;
     private string _accessToken;
@@ -12,6 +13,7 @@ public class ModerationManager
     private readonly ChatHandler _chat;
     public ModerationManager(TwitchAPI twitchAPI, string broadcasterId, string token, ChatHandler handler)
     {
+        Instance ??= this;
         _twitchAPI = twitchAPI;
         _broadcasterId = broadcasterId;
         _accessToken = token;

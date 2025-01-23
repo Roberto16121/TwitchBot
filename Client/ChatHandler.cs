@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Forms;
-using TwitchBot.UI_Parts;
-using TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions;
+﻿using System.Collections.ObjectModel;
+using TwitchBot.Database;
 using TwitchLib.Client.Events;
 using Application = System.Windows.Application;
 
@@ -21,7 +13,7 @@ namespace TwitchBot
 
         public EventHandler<OnMessageReceivedArgs>? MessageReceived;
 
-        public void AddMessage(OnMessageReceivedArgs e)
+        public async Task AddMessage(OnMessageReceivedArgs e)
         {
             Messages.Enqueue(new ChatMessage
             {
@@ -38,6 +30,11 @@ namespace TwitchBot
                 Messages.Dequeue();
             }
             MessageReceived?.Invoke(this, e);
+            await using var context = new AppDbContext();
+            bool success = await context.IncrementUserMessages(e.ChatMessage.UserId);
+            if (success)
+                return;
+            await context.AddNewUserStatistics(e.ChatMessage.UserId, e.ChatMessage.Username);
         }
 
         public void AddMessage(string username, string messageText) // sent from app

@@ -1,3 +1,4 @@
+using TwitchBot.Database;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 
@@ -41,7 +42,8 @@ public class ChatEventManager
     {
         var viewer = await _viewerManager.GetViewerAsync(e.Username);
         _chatHandler.AddUser(viewer);
-        Database.Database.Instance.AddOrUpdateUser(viewer.userId, (int)viewer.viewerType);
+        await using var context = new AppDbContext();
+        await context.AddNewUser(viewer.userId, viewer.viewerType.ToString(), e.Username);
     }
 
     private void HandleUserLeft(object? sender, OnUserLeftArgs e)

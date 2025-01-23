@@ -1,4 +1,7 @@
 
+using TwitchBot.Database;
+using TwitchLib.Client.Events;
+
 namespace TwitchBot;
 
 public class Module
@@ -7,6 +10,7 @@ public class Module
 
     public bool Enabled { get; private set; } = true;
     public Guid Id { get; private set; }
+    private string _id;
     public string Name { get; private set; }
     public List<string> Keywords { get; private set; } = new();
     public ActionType Type { get; private set; }
@@ -39,14 +43,18 @@ public class Module
         Name = name;
         Type = ActionType.Sound;
         Id = Guid.NewGuid();
+        _id = Id.ToString();
     }
 
     public void SetEnable(bool value) =>
         Enabled = value;
-        
 
-    private void SetId(Guid value) =>
+
+    private void SetId(Guid value)
+    {
         Id = value;
+        _id = Id.ToString();
+    }
 
     public void SetName(string name)
     {
@@ -72,20 +80,27 @@ public class Module
     public void SetModified() =>
         Modified = true;
 
-    public void TryExecute(ViewerType viewerType)
+    private bool _executed;
+    public async Task TryExecute(OnMessageReceivedArgs message, ViewerType viewerType)
     {
         if (viewerType == ViewerType.Broadcaster)
         {
             Execute();
+            await UpdateDatabase(message.ChatMessage.UserId);
             return;
         }
 
         if (!CooldownManager.CustomCooldown)
         {
-            if(GetDuration(_normal) >= CooldownManager.Cooldown)
+            if (GetDuration(_normal) >= CooldownManager.Cooldown)
+            {
                 Execute(ref _normal);
+                await UpdateDatabase(message.ChatMessage.UserId);
+            }
+
             return;
         }
+        _executed = false;
         switch (viewerType)
         {
             case ViewerType.Moderator:
@@ -109,6 +124,8 @@ public class Module
                     Execute(ref _normal);
             } break;
         }
+        if(_executed)
+            await UpdateDatabase(message.ChatMessage.UserId);
     }
 
     int GetDuration(DateTime executed) =>
@@ -116,6 +133,7 @@ public class Module
 
     void Execute(ref DateTime time)
     {
+        _executed = true;
         time = DateTime.Now;
         _ = Type == ActionType.Sound ? SoundController.Instance.Execute(SoundManager) 
             : ObsController.Instance.Execute(ObsManager);
@@ -125,6 +143,15 @@ public class Module
     {
         _ = Type == ActionType.Sound ? SoundController.Instance.Execute(SoundManager) 
             : ObsController.Instance.Execute(ObsManager);
+    }
+
+    async Task UpdateDatabase(string userId)
+    {
+        await using var context = new AppDbContext();
+        bool success = await context.IncreaseModuleUsed(_id);
+        if(!success)
+            await context.AddNewModuleStatistics(_id, Name, 1);
+        await context.IncreaseUserModuleUsed(userId, _id);
     }
     
     #endregion Methods

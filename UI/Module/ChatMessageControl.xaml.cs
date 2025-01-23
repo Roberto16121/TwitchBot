@@ -48,19 +48,19 @@ namespace TwitchBot.UI_Parts
         #region Buttons
         private void BanButton_Click(object sender, RoutedEventArgs e)
         {
-            Client.Instance.ModerationManager.BanUser(thisMessage.userId, "Just because");
+            ModerationManager.Instance.BanUser(thisMessage.userId, "Just because");
         }
 
         private void Timeout_Click(object sender, RoutedEventArgs e)
         {
-            Client.Instance.ModerationManager.TimeoutUser(thisMessage.userId, 5, "Moderator Decided");
+            ModerationManager.Instance.TimeoutUser(thisMessage.userId, 5, "Moderator Decided");
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
             if (thisMessage.messageId == "")
                 return;
-            Client.Instance.ModerationManager.DeleteMessage(thisMessage.messageId);
+            ModerationManager.Instance.DeleteMessage(thisMessage.messageId);
         }
 
 

@@ -1,4 +1,5 @@
 using System.IO;
+using TwitchBot.Database;
 using TwitchLib.Client.Events;
 
 
@@ -66,9 +67,9 @@ public class ModuleManager
             if(!module.Enabled)
                 continue;
             if (!module.Keywords.Any(message.ChatMessage.Message.Contains)) continue;
-
-            ViewerType type = await Database.Database.Instance.GetViewerType(message.ChatMessage.UserId);
-            module.TryExecute(type);
+            await using var context = new AppDbContext();
+            ViewerType type = await context.GetViewerType(message.ChatMessage.UserId, message.ChatMessage.Username);
+            await module.TryExecute(message, type);
             return;
         }
     }

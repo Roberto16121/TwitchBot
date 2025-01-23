@@ -29,7 +29,7 @@ namespace TwitchBot
 
             client = new();
             
-            client.ChatEventManager.OnMessageReceived += UpdateMessages;
+            client.ServiceManager.ChatEventManager.OnMessageReceived += UpdateMessages;
             DataContext = client.ChatHandler;
 
         }
@@ -63,7 +63,7 @@ namespace TwitchBot
             {
                 if(MessageBox.Text != String.Empty)
                 {
-                    client.ChatEventManager.SendMessage(client.Configuration.Username, MessageBox.Text);
+                    client.ServiceManager.ChatEventManager.SendMessage(client.Configuration.Username, MessageBox.Text);
                     client.ChatHandler.AddMessage(client.Configuration.Username, MessageBox.Text);
                     MessageBox.Text = String.Empty;
                 }

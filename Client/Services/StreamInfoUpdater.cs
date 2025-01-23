@@ -24,6 +24,8 @@ public class StreamInfoUpdater
         _timer.Start();
     }
 
+    public ref Action<string, int, DateTime>? GetEvent() => ref OnStreamInfoUpdated;
+
     private async void TimerTick(object sender, EventArgs e)
     {
         await FetchStreamInfo();
