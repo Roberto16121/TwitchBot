@@ -58,7 +58,7 @@ This is an outgoing project and it doesn't represent the final product
 
 
 * .NET 8.0
-* WinForms
+* WPF
 * SQLite
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
