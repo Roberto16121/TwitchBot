@@ -123,8 +123,10 @@ OBS ACTION Setup:
 <!-- ROADMAP -->
 ## Roadmap
 - [ ] Implement Statistics
-  - [ ] Create User based statistics (messages sent, view time, etc)
-  - [ ] Create Module based statistics (Used count, most used by, etc)
+  - [x] Create User based statistics (messages sent, view time, etc)
+  - [x] Create Module based statistics (Used count, most used by, etc)
+  - [ ] Implement Sorting
+  - [ ] Implement Filters
 - [ ] Implement Commands (similar to modules but used for moderation and twitch interactions)
   - [ ] Implement reply option
   - [ ] Implement song request queue
