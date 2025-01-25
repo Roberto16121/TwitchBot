@@ -72,6 +72,9 @@ namespace TwitchBot.UI_Parts
             SetActionType((int)_currentModule.Type);
             SetActionSettings();
             _firstTime = false;
+            if(!_enabled)
+                SetState();
+                
         }
 
         private bool _firstTime = true;

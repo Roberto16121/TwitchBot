@@ -7,7 +7,7 @@ using TwitchBot.UI_Parts;
 
 namespace TwitchBot
 {
-    class Client
+    public class Client
     {
         public readonly ModuleManager ModuleManager;
         public readonly ChatHandler ChatHandler;

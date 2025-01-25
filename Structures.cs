@@ -4,9 +4,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
-using TwitchBot.UI.Statistics;
 
 public class ChatMessage
 {
@@ -51,6 +49,14 @@ public enum ActionType
 {
     Sound = 0,
     Obs = 1,
+}
+
+public enum FrameType
+{
+    Home, 
+    Module, 
+    Statistics,
+    Settings
 }
 
 public class ModuleData
