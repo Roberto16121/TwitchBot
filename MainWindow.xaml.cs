@@ -1,15 +1,11 @@
 ﻿using System.Windows;
 using TwitchLib.Client.Events;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Windows.Threading;
-using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using TwitchBot.UI_Parts;
+using TwitchBot.UI;
 using TwitchBot.UI.Statistics;
-using TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions;
+using Brushes = System.Windows.Media.Brushes;
 
 namespace TwitchBot
 {
@@ -18,20 +14,24 @@ namespace TwitchBot
     /// </summary>
     public partial class MainWindow : Window
     {
-        readonly Client client;
-        NavigationService ns;
-
-        NavigationWindow? navigationWdw;
-
+        readonly Client _client;
+        NavigationService _ns;
+        NavigationWindow? _navigationWdw;
+        
+        private FrameType _frameType = FrameType.Home;
+        private HomePage? _home;
+    
         public MainWindow()
         {
             InitializeComponent();
 
-            client = new();
+            _client = new();
             
-            client.ServiceManager.ChatEventManager.OnMessageReceived += UpdateMessages;
-            DataContext = client.ChatHandler;
-
+            _client.ServiceManager.ChatEventManager.OnMessageReceived += UpdateMessages;
+            DataContext = _client.ChatHandler;
+            _home = new(_client);
+            HomeButton.Foreground = Brushes.Wheat;
+            MainFrame.Navigate(_home);
         }
 
 
@@ -44,85 +44,76 @@ namespace TwitchBot
         {
             Dispatcher.Invoke(() =>
             {
-                client.ChatHandler.AddMessage(e);
+                _client.ChatHandler?.AddMessage(e);
                 
-                var scrollViewer = Helper.GetScrollViewer(ChatBox);
-
-                bool isAtBottom = scrollViewer.VerticalOffset + scrollViewer.ViewportHeight >= scrollViewer.ExtentHeight;
-                if (!isAtBottom)
-                    return;
-
-                ChatBox.SelectedIndex = ChatBox.Items.Count - 1;
-                ChatBox.ScrollIntoView(ChatBox.SelectedItem);
+                _home?.ScrollIntoView();
             });
-        }
-
-        private void MessageBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                if(MessageBox.Text != String.Empty)
-                {
-                    client.ServiceManager.ChatEventManager.SendMessage(client.Configuration.Username, MessageBox.Text);
-                    client.ChatHandler.AddMessage(client.Configuration.Username, MessageBox.Text);
-                    MessageBox.Text = String.Empty;
-                }
-            }
         }
 
         private void ModulesButton_Click(object sender, RoutedEventArgs e)
         {
-            InitializeNavigation();
-            ModulePage page = new ModulePage(this);
-            navigationWdw.Closed += page.PageIsClosing;
-            navigationWdw.Navigate(page);
-            navigationWdw.Show();
-            navigationWdw.MinHeight = 400;
-            navigationWdw.MinWidth = 800;
+            if (_frameType != FrameType.Module)
+            {
+                MainFrame.Navigate(new ModulePage(this));
+                _frameType = FrameType.Module;
+                HomeButton.Foreground = Brushes.Black;
+                ModulesButton.Foreground = Brushes.Wheat;
+                StatisticsButton.Foreground = Brushes.Black;
+                SettingsButton.Foreground = Brushes.Black;
+            }
+            
         }
 
         private void StatisticsButton_Click(object sender, RoutedEventArgs e)
         {
-            InitializeNavigation();
-            StatisticsPage page = new();
-            //navigationWdw.Closed += page.PageIsClosing;
-            navigationWdw.Navigate(page);
-            navigationWdw.Show();
-            navigationWdw.MinHeight = 650;
-            navigationWdw.MinWidth = 1000;
+            if (_frameType != FrameType.Statistics)
+            {
+                MainFrame.Navigate(new StatisticsPage());
+                _frameType = FrameType.Statistics;
+                HomeButton.Foreground = Brushes.Black;
+                ModulesButton.Foreground = Brushes.Black;
+                StatisticsButton.Foreground = Brushes.Wheat;
+                SettingsButton.Foreground = Brushes.Black;
+            }
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
+        
+        private void HomeButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (_frameType != FrameType.Home)
+            {
+                MainFrame.Navigate(_home);
+                _frameType = FrameType.Home;
+                HomeButton.Foreground = Brushes.Wheat;
+                ModulesButton.Foreground = Brushes.Black;
+                StatisticsButton.Foreground = Brushes.Black;
+                SettingsButton.Foreground = Brushes.Black;
+            }
+
+        }
 
         #endregion UI_Interaction
-
-        private void InitializeNavigation()
-        {
-            navigationWdw = new NavigationWindow();
-            navigationWdw.Height = this.Height;
-            navigationWdw.Width = this.Width;
-            navigationWdw.ShowsNavigationUI = false;
-        }
 
 
 
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-            client.ModuleManager.SaveAllModules();
+            _client.ModuleManager.SaveAllModules();
                 
-            if (navigationWdw == null)
+            if (_navigationWdw == null)
                 return;
-            if(navigationWdw.Content != null)
-                navigationWdw.Close();
+            if(_navigationWdw.Content != null)
+                _navigationWdw.Close();
         }
 
         public void ClosePage(Page page)
         {
-            navigationWdw?.Close();
+            _navigationWdw?.Close();
             page = null;
         }
         

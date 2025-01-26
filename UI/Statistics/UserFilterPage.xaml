@@ -1,0 +1,120 @@
+<Page x:Class="TwitchBot.UI.Statistics.UserFilterPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:TwitchBot.UI.Statistics"
+      mc:Ignorable="d"
+      Title="AdvanceFilterPage" Height="170" Width="500">
+    <Grid Background="DarkCyan">
+        <StackPanel>
+            <Border BorderThickness="1" 
+                    BorderBrush="DarkGray"
+                    CornerRadius="5"
+                    Height="40">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Min. Number of Messages"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Width="250"
+                               Padding="5,0,0,0"/>
+                    <TextBox x:Name="NumberOfMessages"
+                             HorizontalAlignment="Right"
+                             VerticalAlignment="Center"
+                             TextWrapping="Wrap"
+                             FontSize="16"
+                             FontWeight="Bold"
+                             MaxLength="50"
+                             Width="200"
+                             TextChanged="NumberOfMessages_OnTextChanged"
+                             />
+                </StackPanel>
+            </Border>
+            
+            <Border BorderThickness="1" 
+                    BorderBrush="DarkGray"
+                    CornerRadius="5"
+                    Height="40">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Min. Number of Modules Used"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Width="250"
+                               Padding="5,0,0,0"/>
+                    <TextBox x:Name="NumberOfModules"
+                             HorizontalAlignment="Right"
+                             VerticalAlignment="Center"
+                             TextWrapping="Wrap"
+                             FontSize="16"
+                             FontWeight="Bold"
+                             MaxLength="50"
+                             Width="200"
+                             TextChanged="NumberOfModules_OnTextChanged"
+                    />
+                </StackPanel>
+            </Border>
+            
+            <Border BorderThickness="1" 
+                    BorderBrush="DarkGray"
+                    CornerRadius="5"
+                    Height="35">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Time Measurement"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Width="250"
+                               Padding="5,0,0,0"/>
+                    <ComboBox x:Name="TimeType"
+                              Width="200"
+                              Text="What type of action"
+                              ItemsSource="{Binding Actions}"
+                              IsEditable="True"
+                              IsReadOnly="True"
+                              SelectedIndex="0"
+                              FontSize="16"
+                              FontWeight="Bold"
+                              SelectionChanged="TimeType_OnSelectionChanged">
+                        <ComboBoxItem Content="Minutes"
+                                      x:Name="Minutes"/>
+                        <ComboBoxItem Content="Hours"
+                                      x:Name="Hours"/>
+                        <ComboBoxItem Content="Days"
+                                      x:Name="Days"/>
+                    </ComboBox>
+                </StackPanel>
+            </Border>
+            
+            <Border BorderThickness="1" 
+                    BorderBrush="DarkGray"
+                    CornerRadius="5"
+                    Height="40">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Min. View Time"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Width="250"
+                               Padding="5,0,0,0"/>
+                    <TextBox x:Name="Viewtime"
+                             HorizontalAlignment="Right"
+                             VerticalAlignment="Center"
+                             TextWrapping="Wrap"
+                             FontSize="16"
+                             FontWeight="Bold"
+                             MaxLength="50"
+                             Width="200"
+                             TextChanged="Viewtime_OnTextChanged"
+                    />
+                </StackPanel>
+            </Border>
+            
+        </StackPanel>
+    </Grid>
+</Page>

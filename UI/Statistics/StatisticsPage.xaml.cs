@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using TwitchBot.Interface;
 
 namespace TwitchBot.UI.Statistics;
 
@@ -9,32 +10,18 @@ public partial class StatisticsPage : Page
     private FilterControl _filterControl;
     private UserListControl _userListControl;
     private ModuleListControl _moduleListControl;
+    private IFilterable _filterable;
     public StatisticsPage()
     {
         InitializeComponent();
         _filterControl = FilterControl;
         UserMode();
+        _filterControl.SearchChanged += SetWordFilter;
     }
 
-    private void DaysAll_OnClick(object sender, RoutedEventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void Days30_OnClick(object sender, RoutedEventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void Days7_OnClick(object sender, RoutedEventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void DayToday_OnClick(object sender, RoutedEventArgs e)
-    {
-        throw new NotImplementedException();
-    }
+    void SetWordFilter(string word)
+        => _filterable.SetSearch(word);
+    
 
     private void UserMod_OnClick(object sender, RoutedEventArgs e)
     {
@@ -52,6 +39,7 @@ public partial class StatisticsPage : Page
         Stats.Content = _userListControl;
         UserMod.Background = Brushes.Wheat;
         ModuleMod.Background = Brushes.DarkGray;
+        _filterable = _userListControl;
     }
 
     private void ModuleMode()
@@ -60,5 +48,6 @@ public partial class StatisticsPage : Page
         Stats.Content = _moduleListControl;
         UserMod.Background = Brushes.DarkGray;
         ModuleMod.Background = Brushes.Wheat;
+        _filterable = _moduleListControl;
     }
 }

@@ -18,41 +18,9 @@
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal"
                             Height="50"
-                            Width="1000"
-                            MinWidth="250">
-                <Line Width="50"/>
-                <Button x:Name="DaysAll"
-                        Width="120"
-                        Height="40"
-                        Content="All Time"
-                        Click="DaysAll_OnClick"/>
-                
-                <Line Width="50"/>
-                
-                <Button x:Name="Days30"
-                        Width="120"
-                        Height="40"
-                        Content="30 Days"
-                        Click="Days30_OnClick"/>
-                
-                <Line Width="50"/>
-                
-                <Button x:Name="Days7"
-                        Width="120"
-                        Height="40"
-                        Content="7 Days"
-                        Click="Days7_OnClick"/>
-                
-                <Line Width="50"/>
-                
-                <Button x:Name="DayToday"
-                        Width="120"
-                        Height="40"
-                        Content="Today"
-                        Click="DayToday_OnClick"/>
-                
-                <Line Width="200"/>
-                
+                            Width="100"
+                            MinWidth="100"
+                            HorizontalAlignment="Left">
                 <Button x:Name="UserMod"
                         Width="50"
                         Height="40"

@@ -4,92 +4,76 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TwitchBot.UI_Parts" 
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        MinHeight="400"
-        MinWidth="600"
+        MinHeight="600"
+        MinWidth="1000"
         Title="MainWindow" Height="650" Width="1000">
-    <Grid Background="#A888B5">
-        <Frame x:Name="MainFrame"/>
-        <ListBox 
-            ItemsSource="{Binding Messages}"
-            HorizontalContentAlignment="Stretch"
-            BorderBrush="DarkGray"
-            BorderThickness="2"
-            Background="#B6CBBD"
-            Margin="243,36,45,110"
-            x:Name="ChatBox"
-            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-            ScrollViewer.VerticalScrollBarVisibility="Auto">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <local:ChatMessageControl ChatMessage="{Binding}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-
-        </ListBox>
-        <Label Margin="243,0,45,20"
-               Height="26"
-               VerticalAlignment="Bottom"
-               Content="Send a Message"/>
-        <TextBox x:Name="MessageBox"
-                 Margin="243,0,45,46" 
-                 TextWrapping="Wrap"
-                 Background="#B6CBBD"
-                 KeyDown="MessageBox_KeyDown"
-                 Height="42"
-                 VerticalAlignment="Bottom"
-                 MaxLength="500">
-
-        </TextBox>
+    <Grid Background="#008080">
+        <Frame x:Name="MainFrame"
+               HorizontalAlignment="Stretch"
+               Margin="210,46,45,10"
+               NavigationUIVisibility="Hidden"/>
+       
 
         <UniformGrid HorizontalAlignment="Left"
-                Width="243" 
-                Height="213"
+                Width="400" 
+                Height="44"
                 VerticalAlignment="Top"
                 Background="Transparent"
-                Columns="1">
+                Rows="1"
+                Margin="210,0,0,0">
+            <Button x:Name="HomeButton"
+                    BorderBrush="Transparent"
+                    Background="#3498DB"
+                    VerticalAlignment="Stretch" 
+                    HorizontalAlignment="Stretch" 
+                    Click="HomeButton_OnClick"
+                    Padding="2"
+                    Content = "Home"
+                    FontWeight="Bold"
+                    FontSize="20">
+            </Button>
             <Button x:Name="ModulesButton"
-                    BorderBrush="DarkGray"
-                    Background="#FFD2A0"
+                    BorderBrush="Transparent"
+                    Background="#3498DB"
                     VerticalAlignment="Stretch" 
                     HorizontalAlignment="Stretch" 
                     Click="ModulesButton_Click"
-                    Padding="2">
-                <Label TextBlock.FontSize="24"
-                       TextBlock.FontWeight="Bold"
-                       Content="Modules"/>
+                    Padding="2"
+                    Content="Modules"
+                    FontSize="20"
+                    FontWeight="Bold">
             </Button>
 
             <Button x:Name="StatisticsButton"
-                    BorderBrush="DarkGray"
-                    Background="#FFD2A0"
+                    BorderBrush="Transparent"
+                    Background="#3498DB"
                     VerticalAlignment="Stretch" 
                     HorizontalAlignment="Stretch" 
                     Click="StatisticsButton_Click"
-                    Padding="2">
-                <Label TextBlock.FontSize="24"
-                       TextBlock.FontWeight="Bold"
-                       Content="Statistics"/>
+                    Padding="2"
+                    Content="Statistics"
+                    FontSize="20"
+                    FontWeight="Bold">
             </Button>
 
             <Button x:Name="SettingsButton"
-                    BorderBrush="DarkGray"
-                    Background="#FFD2A0"
+                    BorderBrush="Transparent"
+                    Background="#3498DB"
                     VerticalAlignment="Stretch" 
                     HorizontalAlignment="Stretch" 
                     Click="SettingsButton_Click"
-                    Padding="2">
-                <Label TextBlock.FontSize="24"
-                        TextBlock.FontWeight="Bold"
-                        Content = "Settings"/>
+                    Padding="2"
+                    Content="Settings"
+                    FontSize="20"
+                    FontWeight="Bold">
             </Button>
 
         </UniformGrid>
         <ListBox ItemsSource="{Binding Users}"
                  HorizontalAlignment="Left"
-                 Width="238"
-                 Margin="0,239,0,20"
+                 Width="200"
+                 Margin="0,30,0,20"
                  x:Name="ViewerBox"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -103,12 +87,16 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <local:StreamInformationControl Margin="250,0,0,0" Height="36" VerticalAlignment="Top"/>
+       <local:StreamInformationControl Height="36" 
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Right"/>
         <Label 
-            Margin="0,213,757,0"
+            Width="100"
             Height="26"
             VerticalAlignment="Top"
-            Content="Viewers in Chat"/>
+            HorizontalAlignment="Left"
+            Content="Viewers in Chat"
+            Foreground="#FFFFFF"/>
         
     </Grid>
 

@@ -41,7 +41,6 @@ namespace TwitchBot.UI_Parts
 
         public void UpdateInfo(string title, int count, DateTime startedAt)
         {
-            TitleText.Text = title;
             ViewerCountText.Text = count.ToString();
             started = startedAt;
         }
