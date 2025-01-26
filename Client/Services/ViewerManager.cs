@@ -20,12 +20,10 @@ public class ViewerManager
         var userResponse = await _twitchAPI.Helix.Users.GetUsersAsync(logins: new List<string> { username });
         var user = userResponse.Users.FirstOrDefault();
         if (user == null) return null;
-
         string id = user.Id;
         ViewerType type = ViewerType.Normal;
         if (id == _broadcasterId)
             type = ViewerType.Broadcaster;
-        
 
         var mods = await _twitchAPI.Helix.Moderation.GetModeratorsAsync(_broadcasterId, new List<string> { id });
         if (mods.Data.Any() && type == ViewerType.Normal)

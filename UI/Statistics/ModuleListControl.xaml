@@ -41,5 +41,14 @@
                     FontSize="20"
                     FontWeight="Bold"/>
         </UniformGrid>
+            
+            <ScrollViewer Margin="0,55,0,0"
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="Items">
+                        
+                    </StackPanel>
+                
+            </ScrollViewer>
     </Grid>
 </UserControl>
