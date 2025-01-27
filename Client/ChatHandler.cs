@@ -31,7 +31,7 @@ namespace TwitchBot
             }
             MessageReceived?.Invoke(this, e);
             await using var context = new AppDbContext();
-            bool success = await context.IncrementUserMessages(e.ChatMessage.UserId);
+            bool success = await context.IncreaseUserMessages(e.ChatMessage.UserId);
             if (success)
                 return;
             await context.AddNewUserStatistics(e.ChatMessage.UserId, e.ChatMessage.Username);

@@ -28,6 +28,7 @@
                              FontWeight="Bold"
                              MaxLength="50"
                              Width="200"
+                             Text="0"
                              TextChanged="NumberOfMessages_OnTextChanged"
                              />
                 </StackPanel>
@@ -53,6 +54,7 @@
                              FontWeight="Bold"
                              MaxLength="50"
                              Width="200"
+                             Text="0"
                              TextChanged="NumberOfModules_OnTextChanged"
                     />
                 </StackPanel>
@@ -110,6 +112,7 @@
                              FontWeight="Bold"
                              MaxLength="50"
                              Width="200"
+                             Text="0"
                              TextChanged="Viewtime_OnTextChanged"
                     />
                 </StackPanel>

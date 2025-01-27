@@ -6,6 +6,7 @@ namespace TwitchBot.UI.Statistics;
 public partial class FilterControl : UserControl
 {
     public event Action<string>? SearchChanged;
+    public event Action? FilterClicked;
     
     public FilterControl()
     {
@@ -15,7 +16,7 @@ public partial class FilterControl : UserControl
 
     private void FilterButton_OnClick(object sender, RoutedEventArgs e)
     {
-        
+        FilterClicked?.Invoke();
     }
 
     private void SearchBox_OnTextChanged(object sender, TextChangedEventArgs e)

@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using TwitchBot.Database;
 using TwitchBot.Interface;
@@ -21,29 +20,27 @@ public partial class UserListControl : UserControl, IFilterable
         List<UserStatistics> users = GetFilteredUsers(_userFilter);
         foreach (var user in users)
         {
-            Item item = new(user.Username, user.MessageCount.ToString(), user.ViewTime.ToString(), user.ModuleUsed.ToString());
+            Item item = new(user.Username, user.MessageCount.ToString(), user.ModuleUsed.ToString(), user.ViewTime.ToString());
             Items.Children.Add(item);
         }
     }
 
     public void SetFilter<T>(T filter) where T : struct
     {
-        UserFilter userFilter = new();
-        
-        var filterProperties = typeof(T).GetProperties();
-        var userFilterProperties = typeof(UserFilter).GetProperties();
-        
-        foreach (var filterProp in filterProperties)
+        if (filter is UserFilter userFilter)
+            _userFilter = userFilter;
+        else
         {
-            var userFilterProp = userFilterProperties.FirstOrDefault(p => p.Name == filterProp.Name && p.PropertyType == filterProp.PropertyType);
-            if (userFilterProp != null)
+            // Manually map properties if T is a different struct
+            _userFilter = new UserFilter
             {
-                var value = filterProp.GetValue(filter);
-                userFilterProp.SetValue(userFilter, value);
-            }
+                MinNrMessages = (int)(filter.GetType().GetProperty("MinNrMessages")?.GetValue(filter) ?? 0),
+                MinNrOfModUsages = (int)(filter.GetType().GetProperty("MinNrOfModUsages")?.GetValue(filter) ?? 0),
+                MinViewtime = (int)(filter.GetType().GetProperty("MinViewtime")?.GetValue(filter) ?? 0)
+            };
         }
 
-        _userFilter = userFilter;
+        PopulateList();
     }
     
 

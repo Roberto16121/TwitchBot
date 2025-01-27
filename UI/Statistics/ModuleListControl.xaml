@@ -8,7 +8,7 @@
              d:DesignHeight="500" d:DesignWidth="900"
              MinHeight="500"
              MinWidth="900"
-             MaxWidth="1400"
+             MaxWidth="1600"
              Background="Beige">
     <Grid VerticalAlignment="Stretch"
           HorizontalAlignment="Stretch">
@@ -43,7 +43,7 @@
         </UniformGrid>
             
             <ScrollViewer Margin="0,55,0,0"
-                          HorizontalScrollBarVisibility="Disabled"
+                          HorizontalScrollBarVisibility="Auto"
                           VerticalScrollBarVisibility="Auto">
                     <StackPanel x:Name="Items">
                         

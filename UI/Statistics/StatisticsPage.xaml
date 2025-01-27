@@ -35,7 +35,8 @@
                         Click="ModuleMod_OnClick"/>
                 </StackPanel>
                 <local:FilterControl x:Name="FilterControl"
-                                     Grid.Row="1"/>
+                                     Grid.Row="1"
+                                     HorizontalAlignment="Center"/>
                 <UserControl x:Name = "Stats"
                              VerticalAlignment="Stretch"
                              Grid.Row="2"/>

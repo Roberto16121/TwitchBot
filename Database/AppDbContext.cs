@@ -88,7 +88,7 @@ public class AppDbContext : DbContext
 
     #region Update_Values
 
-    public async Task<bool> IncrementUserMessages(string userId)
+    public async Task<bool> IncreaseUserMessages(string userId)
     {
         var userStats = await UserStatistics.FirstOrDefaultAsync
             (u => u.UserId == userId);
@@ -99,6 +99,17 @@ public class AppDbContext : DbContext
         return true;
     }
 
+    public async Task<bool> IncreaseUserTotalModuleUsage(string userId)
+    {
+        var userStats = await UserStatistics.FirstOrDefaultAsync
+            (u => u.UserId == userId);
+        if (userStats == null) return false;
+        
+        userStats.ModuleUsed++;
+        await SaveChangesAsync();
+        return true;
+    }
+    
     public async Task<bool> IncreaseModuleUsed(string moduleId)
     {
         var moduleStats = await ModuleStatistics.FirstOrDefaultAsync

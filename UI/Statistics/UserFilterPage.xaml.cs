@@ -4,20 +4,16 @@ using TwitchBot.Interface;
 
 namespace TwitchBot.UI.Statistics;
 
-enum TimeEType
-{
-    Minute, 
-    Hour,
-    Day
-}
 
 public partial class UserFilterPage : Page
 {
-    public event Action<UserFilter>? FilterUpdated; 
+    public event Action<UserFilter>? FilterUpdated;
+    private bool init = false;
     public UserFilterPage(StatisticsPage statistics)
     {
         InitializeComponent();
         _userFilter = new();
+        init = true;
     }
 
     private UserFilter _userFilter;
@@ -25,6 +21,8 @@ public partial class UserFilterPage : Page
 
     private void TimeType_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        if (!init)
+            return;
         switch (TimeType.SelectedIndex)
         {
             case 0: _timeE = TimeEType.Minute; break;
@@ -38,30 +36,27 @@ public partial class UserFilterPage : Page
     private static readonly Regex numbers = new Regex(@"^[0123456789]+$");
     private void NumberOfModules_OnTextChanged(object sender, TextChangedEventArgs e)
     {
-        if (numbers.IsMatch(NumberOfModules.Text))
-        {
-            _userFilter.MinNrOfModUsages = int.Parse(NumberOfModules.Text);
-            FilterUpdated?.Invoke(_userFilter);
-        }
+        if (!init)
+            return;
+        _userFilter.MinNrOfModUsages = numbers.IsMatch(NumberOfModules.Text) ? int.Parse(NumberOfModules.Text) : 0;
+        FilterUpdated?.Invoke(_userFilter);
             
     }
 
     private void NumberOfMessages_OnTextChanged(object sender, TextChangedEventArgs e)
     {
-        if (numbers.IsMatch(NumberOfMessages.Text))
-        {
-            _userFilter.MinNrMessages = int.Parse(NumberOfMessages.Text);
-            FilterUpdated?.Invoke(_userFilter);
-        }
+        if (!init)
+            return;
+        _userFilter.MinNrMessages = numbers.IsMatch(NumberOfMessages.Text) ? int.Parse(NumberOfMessages.Text) : 0;
+        FilterUpdated?.Invoke(_userFilter);
     }
 
     private void Viewtime_OnTextChanged(object sender, TextChangedEventArgs e)
     {
-        if (numbers.IsMatch(Viewtime.Text))
-        {
-            _userFilter.MinViewtime = GetTimeInMinutes(int.Parse(Viewtime.Text));
-            FilterUpdated?.Invoke(_userFilter);
-        }
+        if(!init)
+            return;
+        _userFilter.MinViewtime = numbers.IsMatch(Viewtime.Text) ? GetTimeInMinutes(int.Parse(Viewtime.Text)) : 0;
+        FilterUpdated?.Invoke(_userFilter);
     }
 
     private int GetTimeInMinutes(int time)

@@ -86,7 +86,7 @@ public class Module
         if (viewerType == ViewerType.Broadcaster)
         {
             Execute();
-            await UpdateDatabase(message.ChatMessage.UserId);
+            await UpdateDatabase(message.ChatMessage.UserId, message.ChatMessage.Username);
             return;
         }
 
@@ -95,7 +95,7 @@ public class Module
             if (GetDuration(_normal) >= CooldownManager.Cooldown)
             {
                 Execute(ref _normal);
-                await UpdateDatabase(message.ChatMessage.UserId);
+                await UpdateDatabase(message.ChatMessage.UserId, message.ChatMessage.Username);
             }
 
             return;
@@ -125,7 +125,7 @@ public class Module
             } break;
         }
         if(_executed)
-            await UpdateDatabase(message.ChatMessage.UserId);
+            await UpdateDatabase(message.ChatMessage.UserId, message.ChatMessage.Username);
     }
 
     int GetDuration(DateTime executed) =>
@@ -145,13 +145,16 @@ public class Module
             : ObsController.Instance.Execute(ObsManager);
     }
 
-    async Task UpdateDatabase(string userId)
+    async Task UpdateDatabase(string userId, string username)
     {
         await using var context = new AppDbContext();
         bool success = await context.IncreaseModuleUsed(_id);
         if(!success)
             await context.AddNewModuleStatistics(_id, Name, 1);
         await context.IncreaseUserModuleUsed(userId, _id);
+        success = await context.IncreaseUserTotalModuleUsage(userId);
+        if (!success)
+            await context.AddNewUserStatistics(userId, username);
     }
     
     #endregion Methods

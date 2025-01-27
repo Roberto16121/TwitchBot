@@ -1,6 +1,4 @@
-﻿
-
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,7 +17,6 @@ public class ChatMessage
     public string messageId = "";
 }
 
-
 public class ActiveViewer
 {
     public string userId = "";
@@ -35,6 +32,8 @@ public class ActiveViewer
         userColor = color;
     }
 }
+
+#region Enums
 
 public enum ViewerType
 {
@@ -58,6 +57,40 @@ public enum FrameType
     Statistics,
     Settings
 }
+public enum TimeEType
+{
+    Minute, 
+    Hour,
+    Day
+}
+
+public enum StatisticsTab
+{
+    User,
+    Module
+}
+
+public enum OrderByUser
+{
+    Name,
+    Message,
+    Module,
+    Time
+}
+
+public enum OrderByModule
+{
+    Name,
+    UseCount,
+    MostUsedBy,
+    NrUnique
+}
+
+
+
+#endregion Enums
+
+#region Databse
 
 public class ModuleData
 {
@@ -103,6 +136,8 @@ public class TwitchConfig()
     public string ClientId { get; set; }
     public string BroadcasterId { get; set; }
 }
+
+#endregion Database
 
 
 public static class Helper
