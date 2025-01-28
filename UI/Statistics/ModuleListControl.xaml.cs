@@ -31,7 +31,7 @@ public partial class ModuleListControl : UserControl, IFilterable
 
     public void SetFilter<T>(T filter) where T : struct
     {
-        throw new NotImplementedException();
+        
     }
     
 

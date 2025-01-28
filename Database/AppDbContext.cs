@@ -110,6 +110,17 @@ public class AppDbContext : DbContext
         return true;
     }
     
+    public async Task IncreaseUserViewTime(string userId, int amount)
+    {
+        var userStats = await UserStatistics.FirstOrDefaultAsync
+            (u => u.UserId == userId);
+        if (userStats == null)
+            return;
+        userStats.ViewTime += amount;
+        
+        //Save 
+    }
+    
     public async Task<bool> IncreaseModuleUsed(string moduleId)
     {
         var moduleStats = await ModuleStatistics.FirstOrDefaultAsync

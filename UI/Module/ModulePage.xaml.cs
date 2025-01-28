@@ -39,13 +39,11 @@ namespace TwitchBot.UI_Parts
         }
         
         
-        public void PageIsClosing(object sender, EventArgs e)
+        public void PageIsClosing()
         {
             if(_moduleSettings != null)
                 _moduleSettings.ClosePage();
             _moduleManager?.SaveAllModules();
-            _window.ClosePage(this);
-            
         }
 
         private int _nr;

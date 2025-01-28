@@ -16,7 +16,7 @@ public class UserStatistics
     public string UserId { get; set; }
     public string Username { get; set; }
     public int MessageCount { get; set; }
-    public int ViewTime { get; set; } //Seconds
+    public int ViewTime { get; set; } //Minutes
     public int ModuleUsed { get; set; }
 }
 

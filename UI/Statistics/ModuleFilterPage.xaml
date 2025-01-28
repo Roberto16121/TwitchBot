@@ -1,0 +1,77 @@
+<Page x:Class="TwitchBot.UI.Statistics.ModuleFilterPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:TwitchBot.UI.Statistics"
+             mc:Ignorable="d"
+             Height="170" Width="500">
+    <Grid Background="DarkCyan">
+        <StackPanel>
+            <Border BorderThickness="1" 
+                    BorderBrush="DarkGray"
+                    CornerRadius="5"
+                    Height="40">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Hide OBS Modules"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Width="250"
+                               Padding="5,0,0,0"/>
+                    <CheckBox x:Name="HideObs"
+                              VerticalAlignment="Center"
+                              Click="HideObs_OnClick"
+                              />
+                </StackPanel>
+            </Border>
+            
+            <Border BorderThickness="1" 
+                    BorderBrush="DarkGray"
+                    CornerRadius="5"
+                    Height="40">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Hide Sound Modules"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Width="250"
+                               Padding="5,0,0,0"/>
+                    <CheckBox x:Name="HideSound"
+                              VerticalAlignment="Center"
+                              Click="HideSound_OnClick"
+                              />
+                </StackPanel>
+            </Border>
+            
+            <Border BorderThickness="1" 
+                    BorderBrush="DarkGray"
+                    CornerRadius="5"
+                    Height="40">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Minimum Nr. of Uses"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Width="250"
+                               Padding="5,0,0,0"/>
+                    <TextBox x:Name="MinUses"
+                             HorizontalAlignment="Right"
+                             VerticalAlignment="Center"
+                             TextWrapping="Wrap"
+                             FontSize="16"
+                             FontWeight="Bold"
+                             MaxLength="50"
+                             Width="200"
+                             Text="0"
+                             TextChanged="MinUses_OnTextChanged"
+                    />
+                </StackPanel>
+            </Border>
+            
+        </StackPanel>
+    </Grid>
+</Page>

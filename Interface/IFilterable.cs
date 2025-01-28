@@ -18,6 +18,7 @@ public struct UserFilter
 {
     public int MinNrMessages;
     public int MinNrOfModUsages;
-    public int MinViewtime; // seconds/minutes/hours ?
+    public int MinViewtime;
+    public int SelectedIndex;
 
 }

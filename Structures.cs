@@ -137,6 +137,13 @@ public class TwitchConfig()
     public string BroadcasterId { get; set; }
 }
 
+public class UserTime
+{
+    public string Username { get; set; } = string.Empty;
+    public string UserId { get; set; } = string.Empty;
+    public DateTime Connected { get; set; }
+}
+
 #endregion Database
 
 

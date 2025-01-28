@@ -32,7 +32,7 @@ namespace TwitchBot.UI_Parts
 
         DateTime started = DateTime.MinValue;
 
-        private void Timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object? sender, EventArgs e)
         {
             if (started == DateTime.MinValue)
                 return;
@@ -42,13 +42,17 @@ namespace TwitchBot.UI_Parts
         public void UpdateInfo(string title, int count, DateTime startedAt)
         {
             ViewerCountText.Text = count.ToString();
-            started = startedAt;
+            started = new DateTime(startedAt.Year, startedAt.Month, startedAt.Day, startedAt.Hour+2, startedAt.Minute, startedAt.Second);
         }
 
 
-        private void GetUptime(TimeSpan time) =>
-            UptimeText.Text = string.Format("Inca nu merge");
-           //((int)time.TotalHours), time.Minutes, time.Seconds);
+        private void GetUptime(TimeSpan time)
+        {
+            string text = $"{time.Hours:00}:{time.Minutes:00}:{time.Seconds:00}";
+            UptimeText.Text = text;
+            
+        }
+        //((int)time.TotalHours), time.Minutes, time.Seconds);
 
     }
 }

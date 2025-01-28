@@ -11,13 +11,12 @@ namespace TwitchBot
     {
         public readonly ModuleManager ModuleManager;
         public readonly ChatHandler ChatHandler;
-        public readonly Database.Database Database;
         public readonly ServiceManager ServiceManager;
         public readonly ModuleController ModuleController;
         public readonly TwitchConfiguration Configuration;
         
         public static string BroadcasterColor = "#FF0000";
-        public static string ModeratorColor = "#00FF00";
+        public static string ModeratorColor = "#25a109";
         public static string SubscriberColor = "#F020D8";
         public static string NormalColor = "#000000";
 
@@ -47,7 +46,6 @@ namespace TwitchBot
 
         private void HandleStreamInfoUpdated(string title, int viewerCount, DateTime startedAt)
         {
-            // Update the UI or handle the stream info as needed
             Application.Current.Dispatcher.Invoke(() =>
             {
                 StreamInformationControl.Instance.UpdateInfo(title, viewerCount, startedAt);

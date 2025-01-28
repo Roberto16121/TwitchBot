@@ -20,7 +20,12 @@
                    Margin="0,0,1,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Center"
-                   Height="36" Width="82"/>
+                   Height="36"
+                   Width="100"
+                   TextAlignment="Center"
+                   FontSize="24"
+                   FontWeight="Bold"
+                   Foreground="Red"/>
         </Border>
 
         <Border Grid.Column ="1"
@@ -31,7 +36,11 @@
                    Margin="0,0,1,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Center"
-                   Height="36" Width="82"/>
+                   Height="36" 
+                   Width="140"
+                   TextAlignment="Center"
+                   FontSize="24"
+                   FontWeight="Bold"/>
         </Border>
 
     </Grid>

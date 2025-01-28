@@ -15,8 +15,6 @@ namespace TwitchBot
     public partial class MainWindow : Window
     {
         readonly Client _client;
-        NavigationService _ns;
-        NavigationWindow? _navigationWdw;
         
         private FrameType _frameType = FrameType.Home;
         private HomePage? _home;
@@ -50,11 +48,16 @@ namespace TwitchBot
             });
         }
 
+        private ModulePage? _modulePage;
+        private StatisticsPage? _statistics;
         private void ModulesButton_Click(object sender, RoutedEventArgs e)
         {
+            _statistics?.ClosePage();
+            _statistics = null;
             if (_frameType != FrameType.Module)
             {
-                MainFrame.Navigate(new ModulePage(this));
+                _modulePage = new(this);
+                MainFrame.Navigate(_modulePage);
                 _frameType = FrameType.Module;
                 HomeButton.Foreground = Brushes.Black;
                 ModulesButton.Foreground = Brushes.Wheat;
@@ -66,9 +69,12 @@ namespace TwitchBot
 
         private void StatisticsButton_Click(object sender, RoutedEventArgs e)
         {
+            _modulePage?.PageIsClosing();
+            _modulePage = null;
             if (_frameType != FrameType.Statistics)
             {
-                MainFrame.Navigate(new StatisticsPage());
+                _statistics = new();
+                MainFrame.Navigate(_statistics);
                 _frameType = FrameType.Statistics;
                 HomeButton.Foreground = Brushes.Black;
                 ModulesButton.Foreground = Brushes.Black;
@@ -84,6 +90,10 @@ namespace TwitchBot
         
         private void HomeButton_OnClick(object sender, RoutedEventArgs e)
         {
+            _modulePage?.PageIsClosing();
+            _modulePage = null;
+            _statistics?.ClosePage();
+            _statistics = null;
             if (_frameType != FrameType.Home)
             {
                 MainFrame.Navigate(_home);
@@ -100,22 +110,16 @@ namespace TwitchBot
 
 
 
-        protected override void OnClosed(EventArgs e)
+        protected override async void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
+            await _client.ServiceManager.ChatEventManager.UpdateAllUsers();
             _client.ModuleManager.SaveAllModules();
-                
-            if (_navigationWdw == null)
-                return;
-            if(_navigationWdw.Content != null)
-                _navigationWdw.Close();
+            _statistics?.ClosePage();
+            _modulePage?.PageIsClosing();
+            
         }
-
-        public void ClosePage(Page page)
-        {
-            _navigationWdw?.Close();
-            page = null;
-        }
+        
         
     }
 }

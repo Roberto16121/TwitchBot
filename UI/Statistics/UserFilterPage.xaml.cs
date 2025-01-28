@@ -9,11 +9,35 @@ public partial class UserFilterPage : Page
 {
     public event Action<UserFilter>? FilterUpdated;
     private bool init = false;
-    public UserFilterPage(StatisticsPage statistics)
+    public UserFilterPage(UserFilter _filter)
     {
         InitializeComponent();
         _userFilter = new();
+        _userFilter = _filter;
+        LoadData();
         init = true;
+    }
+
+    private void LoadData()
+    {
+        TimeType.SelectedIndex = _userFilter.SelectedIndex;
+        SetTimeType();
+        if (_userFilter.MinNrOfModUsages > 0)
+            NumberOfModules.Text = _userFilter.MinNrOfModUsages.ToString();
+        if (_userFilter.MinNrMessages > 0)
+            NumberOfMessages.Text = _userFilter.MinNrMessages.ToString();
+        if (_userFilter.MinViewtime > 0)
+            Viewtime.Text = ReverseTime(_userFilter.MinViewtime).ToString();
+    }
+
+    void SetTimeType()
+    {
+        switch (TimeType.SelectedIndex)
+        {
+            case 0: _timeE = TimeEType.Minute; break;
+            case 1: _timeE = TimeEType.Hour; break;
+            case 2: _timeE = TimeEType.Day; break;
+        }
     }
 
     private UserFilter _userFilter;
@@ -23,13 +47,9 @@ public partial class UserFilterPage : Page
     {
         if (!init)
             return;
-        switch (TimeType.SelectedIndex)
-        {
-            case 0: _timeE = TimeEType.Minute; break;
-            case 1: _timeE = TimeEType.Hour; break;
-            case 2: _timeE = TimeEType.Day; break;
-        }
+        SetTimeType();
 
+        _userFilter.SelectedIndex = TimeType.SelectedIndex;
         Viewtime_OnTextChanged(null, null);
         FilterUpdated?.Invoke(_userFilter);
     }
@@ -67,5 +87,15 @@ public partial class UserFilterPage : Page
         else if (_timeE == TimeEType.Day)
             minutes = time * 60 * 24;
         return minutes;
+    }
+
+    private int ReverseTime(int time)
+    {
+        int toRet = time;
+        if (_timeE == TimeEType.Hour)
+            toRet = time / 60;
+        else if (_timeE == TimeEType.Day)
+            toRet = (time / 60) / 24;
+        return toRet;
     }
 }
