@@ -122,6 +122,9 @@ OBS ACTION Setup:
 
 <!-- ROADMAP -->
 ## Roadmap
+- [x] Implement Modules (actions based on keywords)
+  - [x] Create Sound Module (play a specific sound)
+  - [x] Create Obs Module (show and hide Sources from Obs)
 - [ ] Implement Statistics
   - [x] Create User based statistics (messages sent, view time, etc)
   - [x] Create Module based statistics (Used count, most used by, etc)
@@ -137,8 +140,6 @@ OBS ACTION Setup:
 - [ ] Implement Settings
     - [ ] Section for OBS WebSocket properties and Scene Name
     - [ ] Section for miscellaneous (list of users to ignore in the Viewer in Chat, etc)
-- [ ] Implement Viewer Cards (showing information about the user)
-- [ ] Revamp Modules (The modules properties should be fully customizable by letting the user select what to use from a list of components)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
